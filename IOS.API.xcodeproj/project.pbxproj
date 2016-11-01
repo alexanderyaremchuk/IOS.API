@@ -17,6 +17,10 @@
 		1DCA71E21DC89EB200C6FA5D /* QueueRejectedDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E11DC89EB200C6FA5D /* QueueRejectedDetails.swift */; };
 		1DCA71E41DC8A02C00C6FA5D /* QueuePassedDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E31DC8A02C00C6FA5D /* QueuePassedDetails.swift */; };
 		1DCA71E61DC8A58200C6FA5D /* QueueItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E51DC8A58200C6FA5D /* QueueItemDetails.swift */; };
+		1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */; };
+		1DCA71EA1DC8DDE600C6FA5D /* QueueService_NSURLConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E91DC8DDE600C6FA5D /* QueueService_NSURLConnection.swift */; };
+		1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */; };
+		1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +48,10 @@
 		1DCA71E11DC89EB200C6FA5D /* QueueRejectedDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueRejectedDetails.swift; sourceTree = "<group>"; };
 		1DCA71E31DC8A02C00C6FA5D /* QueuePassedDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueuePassedDetails.swift; sourceTree = "<group>"; };
 		1DCA71E51DC8A58200C6FA5D /* QueueItemDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueItemDetails.swift; sourceTree = "<group>"; };
+		1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueITEngine.swift; sourceTree = "<group>"; };
+		1DCA71E91DC8DDE600C6FA5D /* QueueService_NSURLConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueService_NSURLConnection.swift; sourceTree = "<group>"; };
+		1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueService.swift; sourceTree = "<group>"; };
+		1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +136,10 @@
 				1DCA71E11DC89EB200C6FA5D /* QueueRejectedDetails.swift */,
 				1DCA71E31DC8A02C00C6FA5D /* QueuePassedDetails.swift */,
 				1DCA71E51DC8A58200C6FA5D /* QueueItemDetails.swift */,
+				1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */,
+				1DCA71E91DC8DDE600C6FA5D /* QueueService_NSURLConnection.swift */,
+				1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */,
+				1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -237,7 +249,11 @@
 				1DCA71E21DC89EB200C6FA5D /* QueueRejectedDetails.swift in Sources */,
 				1DCA71E61DC8A58200C6FA5D /* QueueItemDetails.swift in Sources */,
 				1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */,
+				1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */,
+				1DCA71EA1DC8DDE600C6FA5D /* QueueService_NSURLConnection.swift in Sources */,
+				1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */,
 				1DCA71E41DC8A02C00C6FA5D /* QueuePassedDetails.swift in Sources */,
+				1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
