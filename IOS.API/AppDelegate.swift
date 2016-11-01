@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  IOS.API
-//
-//  Created by Alexander Yaremchuk on 11/1/16.
-//  Copyright (c) 2016 Qeueuit. All rights reserved.
-//
-
 import UIKit
 
 @UIApplicationMain
