@@ -24,7 +24,11 @@ public class QueueService {
             success: { (data) -> Void in
                 var error:NSError? = nil
                 if let dictData = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments, error:&error) as? NSDictionary {
-                    
+                    var queueId = dictData[QueueStatus.KEY_QUEUE_ID] as! String
+                    var queueUrl = dictData[QueueStatus.KEY_QUEUE_URL] as! String
+                    var targetUrl = dictData[QueueStatus.KEY_EVENT_TARGET_URL] as! String
+                    var status = QueueStatus(queueId: queueId, queueUrl: queueUrl, targetUrl: targetUrl)
+                    success(status: status)
                 }
             })
             { (error, errorMessage) -> Void in
