@@ -25,19 +25,23 @@ public class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDele
         self.conn = NSURLConnection(request: self.request, delegate: self)
     }
     
-    public func connectionDidFinishLoading(conn:NSURLConnection) {
+    public func connectionDidFinishLoading(conn:NSURLConnection)
+    {
 
     }
     
-    public func connection(conn:NSURLConnection, didReceiveResponse response:NSURLResponse) {
+    public func connection(conn:NSURLConnection, didReceiveResponse response:NSURLResponse)
+    {
 
     }
     
-    public func connection(conn:NSURLConnection, didReceiveData data:NSData) {
+    public func connection(conn:NSURLConnection, didReceiveData data:NSData)
+    {
 
     }
     
-    public func connection(conn:NSURLConnection, didFailWithError error:NSError) {
+    public func connection(conn:NSURLConnection, didFailWithError error:NSError)
+    {
 
     }
     

@@ -8,6 +8,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        var customerId = "sasha"
+        var eventId = "integrationtest2"
+        var engine = QueueITEngine(customerId: customerId, eventId: eventId, layoutName: "", language: "")
+        engine.tryEnqueue()
+        
         return true
     }
 
