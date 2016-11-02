@@ -16,7 +16,7 @@ public class QueueService {
             body["language"] = language
         }
         
-        let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(eventId)/appenqueue"
+        let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(customerId)/\(eventId)/appenqueue"
         
         self.submitPUTPath(enqueueUrl, bodyDict: body,
             success: { (data) -> Void in
