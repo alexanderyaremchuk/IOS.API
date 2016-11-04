@@ -22,7 +22,8 @@ open class QueueITEngine {
         
         qs.enqueue(self.customerId, eventId: self.eventId, userId: userId, userAgent: userAgent, sdkVersion: sdkVersion, layoutName: nil, language: nil,
             success: { (status) -> Void in
-                QueueCache.sharedInstatnce.setQueueId(status.queueId)
+                //QueueCache.sharedInstatnce.setQueueId(status.queueId)
+                let queueId = QueueCache.sharedInstatnce.getQueueId()
                 
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage

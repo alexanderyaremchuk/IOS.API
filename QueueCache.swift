@@ -1,9 +1,5 @@
 import Foundation
 
-enum CacheErorr : Error {
-    case NotFound(String)
-}
-
 open class QueueCache {
     fileprivate var KEY_CACHE = ""
     fileprivate let KEY_QUEUE_ID = "queueId"
@@ -15,14 +11,24 @@ open class QueueCache {
         KEY_CACHE = "\(customerId)-\(eventId)"
     }
     
-    open func getQueueId() throws -> String {
+    open func getQueueId() -> String? {
         let cache: [String : Any] = ensureCache()
-        let queueId: String = cache[KEY_QUEUE_ID] as! String
+        let queueId: String? = cache[KEY_QUEUE_ID] as? String
         return queueId
+    }
+    
+    open func getSessionTtl() -> String? {
+        let cache: [String : Any] = ensureCache()
+        let sessionTtl: String? = cache[KEY_SESSION_TTL] as? String
+        return sessionTtl
     }
     
     open func setQueueId(_ queueId: String) {
         update(key: KEY_QUEUE_ID, value: queueId)
+    }
+    
+    open func setSessionTtl(_ sessionTtl: String) {
+        update(key: KEY_SESSION_TTL, value: sessionTtl)
     }
     
     func ensureCache() -> [String : Any] {
