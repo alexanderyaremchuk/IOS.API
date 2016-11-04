@@ -11,8 +11,9 @@ open class QueueService {
         let userId = "sashaUnique"
         let userAgent = "myUserAgent"
         let sdkVersion = "v1.0"
+        let configurationId = "configId1"
         
-        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion]
+        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configurationId]
         if layoutName != nil {
             body["layoutName"] = layoutName
         }
@@ -20,7 +21,8 @@ open class QueueService {
             body["language"] = language
         }
         
-        let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(customerId)/\(eventId)/appenqueue"
+        //let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(customerId)/\(eventId)/appenqueue"
+        let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
         
         self.submitPUTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
@@ -36,14 +38,13 @@ open class QueueService {
                 }
             })
             { (error, errorMessage) -> Void in
-            
             }
     }
     
     func submitPUTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
     {
         let url = URL(string: path)
-        self.submitRequestWithURL(url!, httpMethod: "PUT", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
+        self.submitRequestWithURL(url!, httpMethod: "POST", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
         
     }
     

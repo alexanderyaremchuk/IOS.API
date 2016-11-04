@@ -42,6 +42,12 @@ open class QueueCache {
         update(key: KEY_SESSION_TTL, value: sessionTtl)
     }
     
+    open func clear() {
+        var cache: [String : Any] = ensureCache()
+        cache.removeAll()
+        setCache(cache)
+    }
+    
     func ensureCache() -> [String : Any] {
         let defaults = UserDefaults.standard
         if defaults.dictionary(forKey: KEY_CACHE) == nil {
