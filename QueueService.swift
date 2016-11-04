@@ -55,11 +55,5 @@ open class QueueService {
         } catch {
             
         }
-        
-        
-        
-        
-        
-        
     }
 }

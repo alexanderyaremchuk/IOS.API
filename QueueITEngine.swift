@@ -22,11 +22,10 @@ open class QueueITEngine {
         
         qs.enqueue(self.customerId, eventId: self.eventId, userId: userId, userAgent: userAgent, sdkVersion: sdkVersion, layoutName: nil, language: nil,
             success: { (status) -> Void in
-                var qId = status.queueId
-                var url = status.queueUrl
-                var targetUrl = status.targetUrl
+                QueueCache.sharedInstatnce.setQueueId(status.queueId)
+                
             }) { (error, errorMessage) -> Void in
-                var errorText = errorMessage
+                _ = errorMessage
             }
     }
 }
