@@ -6,11 +6,14 @@ open class QueueITEngine {
     open var layoutName: String;
     open var language: String;
     
-    public init(customerId: String, eventId: String, layoutName: String, language: String) {
+    var queuePassed: (String) -> Void
+    
+    public init(customerId: String, eventId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
         self.customerId = customerId;
         self.eventId = eventId;
         self.layoutName = layoutName;
         self.language = language;
+        self.queuePassed = queuePassed
     }
     
     func run() {
@@ -21,6 +24,7 @@ open class QueueITEngine {
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
+            queuePassed("abc")
         }
     }
     

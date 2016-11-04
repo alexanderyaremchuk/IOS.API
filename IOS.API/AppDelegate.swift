@@ -11,10 +11,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customerId = "sasha"
         let eventId = "integrationtest2"
-        let engine = QueueITEngine(customerId: customerId, eventId: eventId, layoutName: "", language: "")
+        let engine = QueueITEngine(customerId: customerId, eventId: eventId, layoutName: "", language: "", queuePassed: (onQueuePassed))
         engine.run()
         
         return true
+    }
+    
+    func onQueuePassed(queueId: String) {
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
