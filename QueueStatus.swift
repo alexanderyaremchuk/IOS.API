@@ -9,6 +9,7 @@ open class QueueStatus {
     open var queueUrl: String
     open var targetUrl: String
     
+    
     public init(queueId: String, queueUrl: String, targetUrl: String) {
         self.queueId = queueId
         self.queueUrl = queueUrl
