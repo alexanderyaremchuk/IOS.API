@@ -2,19 +2,19 @@ import Foundation
 
 
 
-public class QueueCache {
-    private static var KEY_CACHE = ""
-    private static let KEY_QUEUE_ID = "queueId"
+open class QueueCache {
+    fileprivate static var KEY_CACHE = ""
+    fileprivate static let KEY_QUEUE_ID = "queueId"
     
     static let sharedInstatnce  = QueueCache()
     
-    func initialize(customerId: String, eventId: String) {
+    func initialize(_ customerId: String, eventId: String) {
         QueueCache.KEY_CACHE = "\(customerId)-\(eventId)"
     }
     
     func isEmpty() -> Bool {
-        var defaults = NSUserDefaults.standardUserDefaults()
-        if let res = defaults.dictionaryForKey(QueueCache.KEY_CACHE) {
+        let defaults = UserDefaults.standard
+        if let res = defaults.dictionary(forKey: QueueCache.KEY_CACHE) {
             return false;
         }
         return true;

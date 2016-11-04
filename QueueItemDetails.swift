@@ -1,14 +1,14 @@
 import Foundation
 
 public enum QueueIssueMode {
-    case Queue, SafetyNet
+    case queue, safetyNet
 }
 
-public class QueueItemDetails {
-    public var queueId: String;
-    public var queueIssueMode: QueueIssueMode;
-    public var event: EventDetails;
-    public var queueUrl: String;
+open class QueueItemDetails {
+    open var queueId: String;
+    open var queueIssueMode: QueueIssueMode;
+    open var event: EventDetails;
+    open var queueUrl: String;
     
     public init(queueId: String, queueIssueMode: QueueIssueMode, event: EventDetails, queueUrl: String) {
         self.queueId = queueId;

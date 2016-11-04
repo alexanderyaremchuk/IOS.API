@@ -1,10 +1,10 @@
 import Foundation
 
-public class QueueITEngine {
-    public var customerId: String;
-    public var eventId: String;
-    public var layoutName: String;
-    public var language: String;
+open class QueueITEngine {
+    open var customerId: String;
+    open var eventId: String;
+    open var layoutName: String;
+    open var language: String;
     
     public init(customerId: String, eventId: String, layoutName: String, language: String) {
         self.customerId = customerId;
@@ -14,11 +14,11 @@ public class QueueITEngine {
     }
     
     func tryEnqueue() {
-        var userId = "sashaUnique"
-        var userAgent = "myUserAgent"
-        var sdkVersion = "v1.0"
+        let userId = "sashaUnique"
+        let userAgent = "myUserAgent"
+        let sdkVersion = "v1.0"
         
-        var qs = QueueService.sharedInstance
+        let qs = QueueService.sharedInstance
         
         qs.enqueue(self.customerId, eventId: self.eventId, userId: userId, userAgent: userAgent, sdkVersion: sdkVersion, layoutName: nil, language: nil,
             success: { (status) -> Void in

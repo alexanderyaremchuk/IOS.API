@@ -1,13 +1,13 @@
 import Foundation
 
-typealias QueueServiceSuccess = (data: NSData) -> Void
-typealias QueueServiceFailure = (error: NSError, errorMessage: String) -> Void
+typealias QueueServiceSuccess = (_ data: Data) -> Void
+typealias QueueServiceFailure = (_ error: NSError, _ errorMessage: String) -> Void
 
-public class QueueService {
+open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func enqueue(customerId:String, eventId:String, userId:String, userAgent:String, sdkVersion:String, layoutName:String?, language:String?, success:(status: QueueStatus) -> Void,failure:QueueServiceFailure) {
+    func enqueue(_ customerId:String, eventId:String, userId:String, userAgent:String, sdkVersion:String, layoutName:String?, language:String?, success:@escaping (_ status: QueueStatus) -> Void,failure:QueueServiceFailure) {
         var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion]
         if layoutName != nil {
             body["layoutName"] = layoutName
@@ -18,15 +18,17 @@ public class QueueService {
         
         let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(customerId)/\(eventId)/appenqueue"
         
-        self.submitPUTPath(enqueueUrl, bodyDict: body,
+        self.submitPUTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
-                var error:NSError? = nil
-                if let dictData = NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments, error:&error) as? NSDictionary {
-                    var queueId = dictData[QueueStatus.KEY_QUEUE_ID] as! String
-                    var queueUrl = dictData[QueueStatus.KEY_QUEUE_URL] as! String
-                    var targetUrl = dictData[QueueStatus.KEY_EVENT_TARGET_URL] as! String
-                    var status = QueueStatus(queueId: queueId, queueUrl: queueUrl, targetUrl: targetUrl)
-                    success(status: status)
+                do {
+                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                    let queueId = dictData?[QueueStatus.KEY_QUEUE_ID] as! String
+                    let queueUrl = dictData?[QueueStatus.KEY_QUEUE_URL] as! String
+                    let targetUrl = dictData?[QueueStatus.KEY_EVENT_TARGET_URL] as! String
+                    let status = QueueStatus(queueId: queueId, queueUrl: queueUrl, targetUrl: targetUrl)
+                    success(status)
+                } catch {
+                    
                 }
             })
             { (error, errorMessage) -> Void in
@@ -34,22 +36,30 @@ public class QueueService {
             }
     }
     
-    func submitPUTPath(path: String, bodyDict: NSDictionary, success: QueueServiceSuccess, failure: QueueServiceFailure)
+    func submitPUTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
     {
-        var url = NSURL(string: path)
+        let url = URL(string: path)
         self.submitRequestWithURL(url!, httpMethod: "PUT", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
         
     }
     
-    func submitRequestWithURL(url: NSURL, httpMethod: String, bodyDict: NSDictionary, expectedStatus: Int, success: QueueServiceSuccess, failure: QueueServiceFailure) {
-        var jsonData: NSData = NSJSONSerialization.dataWithJSONObject(bodyDict, options: nil, error: nil)!
+    func submitRequestWithURL(_ url: URL, httpMethod: String, bodyDict: NSDictionary, expectedStatus: Int, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure) {
+        do {
+            let jsonData: Data = try JSONSerialization.data(withJSONObject: bodyDict, options: .prettyPrinted)
+            let request = NSMutableURLRequest(url: url)
+            request.httpMethod = httpMethod
+            request.httpBody = jsonData
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            _ = QueueService_NSURLConnectionRequest(request: request as URLRequest, expectedStatusCode: expectedStatus, successCallback: success, failureCallback: failure)
+        } catch {
+            
+        }
         
-        var request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = httpMethod
-        request.HTTPBody = jsonData
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        QueueService_NSURLConnectionRequest(request: request, expectedStatusCode: expectedStatus, successCallback: success, failureCallback: failure)
+        
+        
+        
+        
     }
 }

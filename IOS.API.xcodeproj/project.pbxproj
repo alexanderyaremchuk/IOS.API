@@ -196,9 +196,11 @@
 				TargetAttributes = {
 					1DCA71B81DC88F3800C6FA5D = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0810;
 					};
 					1DCA71CD1DC88F3800C6FA5D = {
 						CreatedOnToolsVersion = 6.3.2;
+						LastSwiftMigration = 0810;
 						TestTargetID = 1DCA71B81DC88F3800C6FA5D;
 					};
 				};
@@ -387,6 +389,7 @@
 				INFOPLIST_FILE = IOS.API/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -397,6 +400,7 @@
 				INFOPLIST_FILE = IOS.API/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -415,6 +419,7 @@
 				INFOPLIST_FILE = IOS.APITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IOS.API.app/IOS.API";
 			};
 			name = Debug;
@@ -430,6 +435,7 @@
 				INFOPLIST_FILE = IOS.APITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IOS.API.app/IOS.API";
 			};
 			name = Release;

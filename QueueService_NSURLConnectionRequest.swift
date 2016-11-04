@@ -1,9 +1,9 @@
 import Foundation
 
-public class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate
+open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate
 {
-    var request: NSURLRequest
-    var response: NSURLResponse?
+    var request: URLRequest
+    var response: URLResponse?
     var conn: NSURLConnection?
     var expectedStatusCode: Int
     var actualStatusCode: Int?
@@ -11,7 +11,7 @@ public class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDele
     var successCallback: QueueServiceSuccess
     var failureCallback: QueueServiceFailure
     
-    init(request: NSURLRequest, expectedStatusCode: Int, successCallback: QueueServiceSuccess, failureCallback: QueueServiceFailure) {
+    init(request: URLRequest, expectedStatusCode: Int, successCallback: @escaping QueueServiceSuccess, failureCallback: @escaping QueueServiceFailure) {
         self.request = request
         self.expectedStatusCode = expectedStatusCode
         self.successCallback = successCallback
@@ -26,43 +26,41 @@ public class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDele
         self.conn = NSURLConnection(request: self.request, delegate: self)
     }
     
-    public func connectionDidFinishLoading(conn:NSURLConnection)
+    open func connectionDidFinishLoading(_ conn:NSURLConnection)
     {
         if hasExpectedStatusCode() {
-            var data = self.data!
-            self.successCallback(data: data)
+            let data = self.data!
+            self.successCallback(data as Data)
         }
     }
     
-    public func connection(conn:NSURLConnection, didReceiveResponse response:NSURLResponse)
+    open func connection(_ conn:NSURLConnection, didReceive response:URLResponse)
     {
         self.response = response
-        var httpResponse = response as! NSHTTPURLResponse
-        var statusCode = httpResponse.statusCode;
+        let httpResponse = response as! HTTPURLResponse
+        let statusCode = httpResponse.statusCode;
         self.actualStatusCode = statusCode
     }
     
-    public func connection(conn:NSURLConnection, didReceiveData data:NSData)
+    open func connection(_ conn:NSURLConnection, didReceive data:Data)
     {
         appendData(data)
     }
     
-    public func connection(conn:NSURLConnection, didFailWithError error:NSError)
+    open func connection(_ conn:NSURLConnection, didFailWithError error:Error)
     {
 
     }
     
     func hasExpectedStatusCode() -> Bool {
         if self.expectedStatusCode != NSNotFound {
-            var actualStatusCode = self.actualStatusCode
-            var expectedStatusCode = self.expectedStatusCode
             return self.expectedStatusCode == self.actualStatusCode
         }
         return false
     }
     
-    func appendData(data: NSData)
+    func appendData(_ data: Data)
     {
-        self.data?.appendData(data)
+        self.data?.append(data)
     }
 }

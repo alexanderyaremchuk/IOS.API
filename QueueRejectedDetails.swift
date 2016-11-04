@@ -1,6 +1,6 @@
 import Foundation
 
-public class QueueRejectedDetails {
+open class QueueRejectedDetails {
     var reasonCode: String;
     var event: EventDetails;
     

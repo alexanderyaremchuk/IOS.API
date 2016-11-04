@@ -1,10 +1,10 @@
 import Foundation
 
 public enum QueuePassedType {
-    case SafetyNet, Queue, Disabled, DirectLink, AfterEvent
+    case safetyNet, queue, disabled, directLink, afterEvent
 }
 
-public class QueuePassedDetails {
+open class QueuePassedDetails {
     var passedType: QueuePassedType;
     var event: EventDetails;
     
