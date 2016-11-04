@@ -25,10 +25,16 @@ open class QueueITEngine {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
             queuePassed("abc")
+        } else {
+            let queueId = cache.getQueueId()
+            if queueId != nil {
+                enqueue()
+            }
+            
         }
     }
     
-    func tryEnqueue() {
+    func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
             success: { (status) -> Void in
                 
