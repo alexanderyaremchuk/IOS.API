@@ -18,19 +18,18 @@ open class QueueITEngine {
     
     func run() {
         let cache = QueueCache.sharedInstatnce
+        let queueId = cache.getQueueId()
         let sessionTtl = cache.getSessionTtl()
         if sessionTtl != nil {
             let isExtendSession = cache.getExtendSession()
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
-            queuePassed("abc")
+            queuePassed(queueId!)
         } else {
-            let queueId = cache.getQueueId()
-            if queueId != nil {
+            if queueId == nil {
                 enqueue()
             }
-            
         }
     }
     
