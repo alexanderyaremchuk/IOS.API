@@ -13,11 +13,20 @@ open class QueueITEngine {
         self.language = language;
     }
     
+    func run() {
+        let cache = QueueCache.sharedInstatnce
+        let sessionTtl = cache.getSessionTtl()
+        if sessionTtl != nil {
+            let isExtendSession = cache.getExtendSession()
+            if isExtendSession != nil {
+                cache.setSessionTtl(sessionTtl! * 2)
+            }
+        }
+    }
+    
     func tryEnqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
             success: { (status) -> Void in
-                //QueueCache.sharedInstatnce.setQueueId(status.queueId)
-                //let queueId = QueueCache.sharedInstatnce.getQueueId()
                 
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage

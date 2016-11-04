@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let customerId = "sasha"
         let eventId = "integrationtest2"
         let engine = QueueITEngine(customerId: customerId, eventId: eventId, layoutName: "", language: "")
-        engine.tryEnqueue()
+        engine.run()
         
         return true
     }
