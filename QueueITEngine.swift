@@ -7,6 +7,7 @@ open class QueueITEngine {
     open var language: String;
     
     
+    
     var queuePassed: (String) -> Void
     
     public init(customerId: String, eventId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
