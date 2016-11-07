@@ -21,16 +21,32 @@ open class QueueService {
             body["language"] = language
         }
         
-        //let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/queue/\(customerId)/\(eventId)/appenqueue"
-        let enqueueUrl = "http://\(customerId).test-q.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
+        let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
         
         self.submitPUTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
                 do {
-                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                    let queueId = dictData?[QueueStatus.KEY_QUEUE_ID] as! String
-                    let queueUrl = dictData?[QueueStatus.KEY_QUEUE_URL] as! String
-                    let targetUrl = dictData?[QueueStatus.KEY_EVENT_TARGET_URL] as! String
+                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
+                    
+                    let qIdDict = dictData.value(forKey: "queueIdDetails") as! NSDictionary
+                    let qId = qIdDict["queueId"] as! String
+                    let ttl = qIdDict["ttl"] as! CLongLong
+                    let queueIdDto = QueueIdDTO(qId, ttl)
+                    
+                    let eventDetailsDict = dictData.value(forKey: "eventDetails") as! NSDictionary
+                    let postQueueStartTime = eventDetailsDict["postQueueStartTime"] as! Int64
+                    let preQueueStartTime = eventDetailsDict["preQueueStartTime"] as! Int64
+                    let state = eventDetailsDict["state"] as! String
+                    let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
+                    let eventDto = EventDTO(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+                    
+                    let enqueueDto = EnqueueDTO(queueIdDto, eventDto)
+                    
+                    
+                    //let queueIdDto = dictData["QueueIdDetails"] as! QueueIdDTO
+                    let queueId = dictData[QueueStatus.KEY_QUEUE_ID] as! String
+                    let queueUrl = dictData[QueueStatus.KEY_QUEUE_URL] as! String
+                    let targetUrl = dictData[QueueStatus.KEY_EVENT_TARGET_URL] as! String
                     let status = QueueStatus(queueId: queueId, queueUrl: queueUrl, targetUrl: targetUrl)
                     success(status)
                 } catch {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */; };
+		1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8161DD08342008AE794 /* EnqueueDTO.swift */; };
+		1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDTO.swift */; };
 		1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC9C76F1DCB42130053681B /* QueueCache.swift */; };
 		1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71BE1DC88F3800C6FA5D /* AppDelegate.swift */; };
 		1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71C01DC88F3800C6FA5D /* ViewController.swift */; };
@@ -35,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueIdDTO.swift; sourceTree = "<group>"; };
+		1D84B8161DD08342008AE794 /* EnqueueDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnqueueDTO.swift; sourceTree = "<group>"; };
+		1D84B8181DD09202008AE794 /* EventDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
 		1DC9C76F1DCB42130053681B /* QueueCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCache.swift; sourceTree = "<group>"; };
 		1DCA71B91DC88F3800C6FA5D /* IOS.API.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.API.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCA71BD1DC88F3800C6FA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -143,6 +149,9 @@
 				1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */,
 				1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */,
 				1DC9C76F1DCB42130053681B /* QueueCache.swift */,
+				1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */,
+				1D84B8161DD08342008AE794 /* EnqueueDTO.swift */,
+				1D84B8181DD09202008AE794 /* EventDTO.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -252,6 +261,8 @@
 				1DD6A7941DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift in Sources */,
 				1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */,
 				1DCA71E01DC899BB00C6FA5D /* EventDetails.swift in Sources */,
+				1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */,
+				1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */,
 				1DCA71E21DC89EB200C6FA5D /* QueueRejectedDetails.swift in Sources */,
 				1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */,
 				1DCA71E61DC8A58200C6FA5D /* QueueItemDetails.swift in Sources */,
@@ -260,6 +271,7 @@
 				1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */,
 				1DCA71E41DC8A02C00C6FA5D /* QueuePassedDetails.swift in Sources */,
 				1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */,
+				1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
