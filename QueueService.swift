@@ -7,7 +7,7 @@ open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func enqueue(_ customerId:String, _ eventId:String, layoutName:String?, language:String?, success:@escaping (_ status: QueueStatus) -> Void,failure:QueueServiceFailure) {
+    func enqueue(_ customerId:String, _ eventId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
         let userId = "sashaUnique"
         let userAgent = "myUserAgent"
         let sdkVersion = "v1.0"
@@ -40,15 +40,7 @@ open class QueueService {
                     let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
                     let eventDto = EventDTO(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     
-                    let enqueueDto = EnqueueDTO(queueIdDto, eventDto)
-                    
-                    
-                    //let queueIdDto = dictData["QueueIdDetails"] as! QueueIdDTO
-                    let queueId = dictData[QueueStatus.KEY_QUEUE_ID] as! String
-                    let queueUrl = dictData[QueueStatus.KEY_QUEUE_URL] as! String
-                    let targetUrl = dictData[QueueStatus.KEY_EVENT_TARGET_URL] as! String
-                    let status = QueueStatus(queueId: queueId, queueUrl: queueUrl, targetUrl: targetUrl)
-                    success(status)
+                    success(EnqueueDTO(queueIdDto, eventDto))
                 } catch {
                     
                 }

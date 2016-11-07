@@ -37,7 +37,8 @@ open class QueueITEngine {
     
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
-            success: { (status) -> Void in
+            success: { (enqueueDto) -> Void in
+                
                 
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage
