@@ -36,6 +36,13 @@ open class QueueITEngine {
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
+                let eventState = enqueueDto.eventDto.state
+                if eventState == "Queue" {
+                    let cache = QueueCache.sharedInstatnce
+                    cache.setQueueId(enqueueDto.queueIdDto.queueId)
+                    cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
+                }
+                
                 
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage

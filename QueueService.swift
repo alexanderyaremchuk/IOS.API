@@ -30,7 +30,7 @@ open class QueueService {
                     
                     let qIdDict = dictData.value(forKey: "queueIdDetails") as! NSDictionary
                     let qId = qIdDict["queueId"] as! String
-                    let ttl = qIdDict["ttl"] as! CLongLong
+                    let ttl = Int(qIdDict["ttl"] as! CLongLong)
                     let queueIdDto = QueueIdDTO(qId, ttl)
                     
                     let eventDetailsDict = dictData.value(forKey: "eventDetails") as! NSDictionary
