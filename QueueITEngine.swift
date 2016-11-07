@@ -6,8 +6,6 @@ open class QueueITEngine {
     open var layoutName: String;
     open var language: String;
     
-    
-    
     var queuePassed: (String) -> Void
     
     public init(customerId: String, eventId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
@@ -38,7 +36,6 @@ open class QueueITEngine {
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
-                
                 
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage
