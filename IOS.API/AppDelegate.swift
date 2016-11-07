@@ -11,7 +11,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customerId = "sasha"
         let eventId = "integrationtest2"
-        let engine = QueueITEngine(customerId: customerId, eventId: eventId, layoutName: "", language: "", queuePassed: (onQueuePassed))
+        let configId = "configId1"
+        let engine = QueueITEngine(customerId: customerId, eventId: eventId, configId: configId, layoutName: "", language: "", queuePassed: (onQueuePassed))
         engine.run()
         
         return true

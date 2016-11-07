@@ -1,18 +1,20 @@
 import Foundation
 
 open class QueueITEngine {
-    open var customerId: String;
-    open var eventId: String;
-    open var layoutName: String;
-    open var language: String;
+    open var customerId: String
+    open var eventId: String
+    open var configId: String
+    open var layoutName: String
+    open var language: String
     
     var queuePassed: (String) -> Void
     
-    public init(customerId: String, eventId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
-        self.customerId = customerId;
-        self.eventId = eventId;
-        self.layoutName = layoutName;
-        self.language = language;
+    public init(customerId: String, eventId: String, configId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
+        self.customerId = customerId
+        self.eventId = eventId
+        self.configId = configId
+        self.layoutName = layoutName
+        self.language = language
         self.queuePassed = queuePassed
     }
     
@@ -34,7 +36,7 @@ open class QueueITEngine {
     }
     
     func enqueue() {
-        QueueService.sharedInstance.enqueue(self.customerId, self.eventId, layoutName: nil, language: nil,
+        QueueService.sharedInstance.enqueue(self.customerId, self.eventId, self.configId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
                 let eventState = enqueueDto.eventDto.state
                 if eventState == "Queue" {

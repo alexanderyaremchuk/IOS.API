@@ -7,13 +7,18 @@ open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func enqueue(_ customerId:String, _ eventId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
+    func getStatus() {
+       
+        
+    }
+    
+    
+    func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
         let userId = "sashaUnique"
         let userAgent = "myUserAgent"
         let sdkVersion = "v1.0"
-        let configurationId = "configId1"
         
-        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configurationId]
+        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configId]
         if layoutName != nil {
             body["layoutName"] = layoutName
         }
