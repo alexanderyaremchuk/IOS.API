@@ -7,9 +7,19 @@ open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func getStatus(_ configId:String, _ widgets:[Widget]) {
+    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget]) {
         var body: [String : Any] = ["configurationId" : configId]
         body["widgets"] = widgets
+        
+        let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/\(queueId)/status"
+        
+        self.submitPUTPath(statusUrl, bodyDict: body as NSDictionary,  success: { (data) -> Void in
+            
+                                
+        })
+        { (error, errorMessage) -> Void in
+        }
+
     }
     
     
@@ -28,7 +38,7 @@ open class QueueService {
         
         let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
         
-        self.submitPUTPath(enqueueUrl, bodyDict: body as NSDictionary,
+        self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
                 do {
                     let dictData = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
@@ -54,10 +64,17 @@ open class QueueService {
             }
     }
     
-    func submitPUTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
+    func submitPOSTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
     {
         let url = URL(string: path)
         self.submitRequestWithURL(url!, httpMethod: "POST", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
+        
+    }
+    
+    func submitPUTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
+    {
+        let url = URL(string: path)
+        self.submitRequestWithURL(url!, httpMethod: "PUT", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
         
     }
     

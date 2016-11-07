@@ -45,10 +45,11 @@ open class QueueITEngine {
                 let eventState = enqueueDto.eventDto.state
                 if eventState == "Queue" {
                     let cache = QueueCache.sharedInstatnce
-                    cache.setQueueId(enqueueDto.queueIdDto.queueId)
-                    cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
+                    let queueId = enqueueDto.queueIdDto.queueId
+                    //cache.setQueueId(queueId)
+                    //cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
                     
-                    QueueService.sharedInstance.getStatus(self.configId, self.widgets)
+                    QueueService.sharedInstance.getStatus(self.customerId, self.eventId, queueId, self.configId, self.widgets)
                 }
                 
                 
