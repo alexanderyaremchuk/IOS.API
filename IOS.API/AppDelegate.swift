@@ -12,7 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let customerId = "sasha"
         let eventId = "integrationtest2"
         let configId = "configId1"
-        let engine = QueueITEngine(customerId: customerId, eventId: eventId, configId: configId, layoutName: "", language: "", queuePassed: (onQueuePassed))
+        let widget1 = Widget("progress", 1)
+        let engine = QueueITEngine(customerId: customerId, eventId: eventId, configId: configId, widget1, layoutName: "", language: "", queuePassed: (onQueuePassed))
         engine.run()
         
         return true

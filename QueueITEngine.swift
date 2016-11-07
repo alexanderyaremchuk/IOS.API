@@ -6,16 +6,20 @@ open class QueueITEngine {
     open var configId: String
     open var layoutName: String
     open var language: String
+    open var widgets = [Widget]()
     
     var queuePassed: (String) -> Void
     
-    public init(customerId: String, eventId: String, configId: String, layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
+    public init(customerId: String, eventId: String, configId: String, _ widgets:Widget ..., layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
         self.layoutName = layoutName
         self.language = language
         self.queuePassed = queuePassed
+        for w in widgets {
+            self.widgets.append(w)
+        }
     }
     
     func run() {
@@ -43,6 +47,8 @@ open class QueueITEngine {
                     let cache = QueueCache.sharedInstatnce
                     cache.setQueueId(enqueueDto.queueIdDto.queueId)
                     cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
+                    
+                    QueueService.sharedInstance.getStatus(self.configId, self.widgets)
                 }
                 
                 

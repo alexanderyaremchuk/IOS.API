@@ -7,9 +7,9 @@ open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func getStatus() {
-       
-        
+    func getStatus(_ configId:String, _ widgets:[Widget]) {
+        var body: [String : Any] = ["configurationId" : configId]
+        body["widgets"] = widgets
     }
     
     
