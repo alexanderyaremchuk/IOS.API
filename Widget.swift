@@ -1,11 +1,11 @@
 import Foundation
 
 open class Widget {
-    var state: String
+    var name: String
     var version: Int
     
-    init(_ state: String, _ version: Int) {
-        self.state = state
+    init(_ name: String, _ version: Int) {
+        self.name = name
         self.version = version
     }
 }

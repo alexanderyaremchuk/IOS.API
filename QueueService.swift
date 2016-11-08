@@ -9,11 +9,20 @@ open class QueueService {
     
     func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget]) {
         var body: [String : Any] = ["configurationId" : configId]
-        body["widgets"] = widgets
         
-        let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/\(queueId)/status"
+        var widgetArr = [Any]()
+        var widgetItemDict = [String : Any]()
+        for w in widgets {
+            widgetItemDict["name"] = w.name
+            widgetItemDict["version"] = w.version
+            widgetArr.append(widgetItemDict)
+        }
         
-        self.submitPUTPath(statusUrl, bodyDict: body as NSDictionary,  success: { (data) -> Void in
+        body["widgets"] = widgetArr
+        
+        let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/\(queueId)/status"
+        
+        self.submitPUTPath(statusUrl, body: body as NSDictionary, success: { (data) -> Void in
             
                                 
         })
@@ -66,20 +75,17 @@ open class QueueService {
     
     func submitPOSTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
     {
-        let url = URL(string: path)
-        self.submitRequestWithURL(url!, httpMethod: "POST", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
-        
+        submitRequestWithURL(path, httpMethod: "POST", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
     }
     
-    func submitPUTPath(_ path: String, bodyDict: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
+    func submitPUTPath(_ path: String, body: NSDictionary, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure)
     {
-        let url = URL(string: path)
-        self.submitRequestWithURL(url!, httpMethod: "PUT", bodyDict: bodyDict, expectedStatus: 200, success: success, failure: failure)
-        
+        submitRequestWithURL(path, httpMethod: "PUT", bodyDict: body, expectedStatus: 200, success: success, failure: failure)
     }
     
-    func submitRequestWithURL(_ url: URL, httpMethod: String, bodyDict: NSDictionary, expectedStatus: Int, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure) {
+    func submitRequestWithURL(_ path: String, httpMethod: String, bodyDict: NSDictionary, expectedStatus: Int, success: @escaping QueueServiceSuccess, failure: @escaping QueueServiceFailure) {
         do {
+            let url = URL(string: path)!
             let jsonData: Data = try JSONSerialization.data(withJSONObject: bodyDict, options: .prettyPrinted)
             let request = NSMutableURLRequest(url: url)
             request.httpMethod = httpMethod
