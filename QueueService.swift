@@ -47,15 +47,19 @@ open class QueueService {
                         redirectDto = RedirectDTO(redirectType, ttl, extendTtl, redirectId)
                     }
                     
-                    let widgetsDict = dictData?.value(forKey: "widgets") as? NSArray
+                    var widgetsResutl = [String]()
+                    let widgetArr = dictData?.value(forKey: "widgets") as? NSArray
                     
-                    var res1 = widgetsDict?.componentsJoined(by: "")
-                    res1 = res1?.replacingOccurrences(of: "\n", with: "")
-                    res1 = res1?.replacingOccurrences(of: " ", with: "")
-                    res1 = res1?.replacingOccurrences(of: "{", with: "")
-                    res1 = res1?.replacingOccurrences(of: "}", with: "")
+                    for w in widgetArr! {
+                        var widgetText = String(describing: w)
+                        widgetText = widgetText.replacingOccurrences(of: "\n", with: "")
+                        widgetText = widgetText.replacingOccurrences(of: " ", with: "")
+                        widgetText = widgetText.replacingOccurrences(of: "{", with: "")
+                        widgetText = widgetText.replacingOccurrences(of: "}", with: "")
+                        widgetsResutl.append(widgetText)
+                    }
                     
-                    let statusDto = StatusDTO(eventDto, redirectDto, "TODO:")
+                    let statusDto = StatusDTO(eventDto, redirectDto, widgetsResutl)
                     onGetStatus(statusDto)
                 } catch {
                     
