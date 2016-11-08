@@ -7,7 +7,7 @@ open class QueueService {
     
     static let sharedInstance = QueueService()
     
-    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget]) {
+    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
         var body: [String : Any] = ["configurationId" : configId]
         
         var widgetArr = [Any]()
@@ -22,15 +22,15 @@ open class QueueService {
         
         let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/\(queueId)/status"
         
-        self.submitPUTPath(statusUrl, body: body as NSDictionary, success: { (data) -> Void in
-            
-                                
-        })
-        { (error, errorMessage) -> Void in
-        }
+        self.submitPUTPath(statusUrl, body: body as NSDictionary,
+            success: { (data) -> Void in
+                let statusDto = StatusDTO("status")
+                onGetStatus(statusDto)
+            })
+            { (error, errorMessage) -> Void in
+            }
 
     }
-    
     
     func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
         let userId = "sashaUnique"

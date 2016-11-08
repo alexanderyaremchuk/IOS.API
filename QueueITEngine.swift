@@ -24,6 +24,9 @@ open class QueueITEngine {
     
     func run() {
         let cache = QueueCache.sharedInstatnce
+        
+        cache.clear()//TODO: remove
+        
         let queueId = cache.getQueueId()
         let sessionTtl = cache.getSessionTtl()
         if sessionTtl != nil {
@@ -44,17 +47,24 @@ open class QueueITEngine {
             success: { (enqueueDto) -> Void in
                 let eventState = enqueueDto.eventDto.state
                 if eventState == "Queue" {
-                    let queueId = enqueueDto.queueIdDto.queueId
-                    //let cache = QueueCache.sharedInstatnce
-                    //cache.setQueueId(queueId)
-                    //cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
-                    
-                    QueueService.sharedInstance.getStatus(self.customerId, self.eventId, queueId, self.configId, self.widgets)
+                    let cache = QueueCache.sharedInstatnce
+                    cache.setQueueId(enqueueDto.queueIdDto.queueId)
+                    cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
+                    self.checkStatus()
                 }
-                
-                
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage
             }
     }
+    
+    func checkStatus() {
+        let queueId = QueueCache.sharedInstatnce.getQueueId()!
+        QueueService.sharedInstance.getStatus(self.customerId, self.eventId, queueId, self.configId, self.widgets, onGetStatus: (onGetStatus))
+    }
+    
+    func onGetStatus(statusDto: StatusDTO) {
+        
+    }
+    
+    
 }

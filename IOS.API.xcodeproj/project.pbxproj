@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
 		1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */; };
 		1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8161DD08342008AE794 /* EnqueueDTO.swift */; };
 		1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDTO.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
 		1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueIdDTO.swift; sourceTree = "<group>"; };
 		1D84B8161DD08342008AE794 /* EnqueueDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnqueueDTO.swift; sourceTree = "<group>"; };
 		1D84B8181DD09202008AE794 /* EventDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				1D84B8161DD08342008AE794 /* EnqueueDTO.swift */,
 				1D84B8181DD09202008AE794 /* EventDTO.swift */,
 				1D84B81A1DD0C401008AE794 /* Widget.swift */,
+				1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */,
 				1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */,
 				1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */,
+				1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */,
 				1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */,
 				1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */,
 			);
