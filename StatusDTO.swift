@@ -1,9 +1,11 @@
 import Foundation
 
 open class StatusDTO {
-    var state: String
+    var eventDto: EventDTO?
+    var redirectDto: RedirectDTO?
     
-    init(_ state: String) {
-        self.state = state
+    init(_ eventDto: EventDTO?, _ redirectDto: RedirectDTO?) {
+        self.eventDto = eventDto
+        self.redirectDto = redirectDto
     }
 }

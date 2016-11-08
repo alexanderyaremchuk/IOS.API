@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
+		1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */; };
 		1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */; };
 		1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8161DD08342008AE794 /* EnqueueDTO.swift */; };
 		1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDTO.swift */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
+		1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectDTO.swift; sourceTree = "<group>"; };
 		1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueIdDTO.swift; sourceTree = "<group>"; };
 		1D84B8161DD08342008AE794 /* EnqueueDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnqueueDTO.swift; sourceTree = "<group>"; };
 		1D84B8181DD09202008AE794 /* EventDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				1D84B8181DD09202008AE794 /* EventDTO.swift */,
 				1D84B81A1DD0C401008AE794 /* Widget.swift */,
 				1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */,
+				1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D84B81B1DD0C401008AE794 /* Widget.swift in Sources */,
+				1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */,
 				1DD6A7941DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift in Sources */,
 				1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */,
 				1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */,

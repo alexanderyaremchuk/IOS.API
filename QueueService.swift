@@ -24,8 +24,34 @@ open class QueueService {
         
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
-                let statusDto = StatusDTO("status")
-                onGetStatus(statusDto)
+                do {
+                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                    
+                    var eventDto: EventDTO?
+                    let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
+                    if eventDetailsDict != nil {
+                        let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
+                        let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
+                        let state = eventDetailsDict?["state"] as! String
+                        let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
+                        eventDto = EventDTO(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+                    }
+                    
+                    var redirectDto: RedirectDTO? = nil
+                    let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
+                    if redirectDetailsDict != nil {
+                        let redirectType = redirectDetailsDict?["redirectType"] as! String
+                        let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
+                        let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
+                        let redirectId = redirectDetailsDict?["redirectId"] as! String
+                        redirectDto = RedirectDTO(redirectType, ttl, extendTtl, redirectId)
+                    }
+                    
+                    let statusDto = StatusDTO(eventDto, redirectDto)
+                    onGetStatus(statusDto)
+                } catch {
+                    
+                }
             })
             { (error, errorMessage) -> Void in
             }
