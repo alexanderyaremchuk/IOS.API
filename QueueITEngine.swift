@@ -44,8 +44,8 @@ open class QueueITEngine {
             success: { (enqueueDto) -> Void in
                 let eventState = enqueueDto.eventDto.state
                 if eventState == "Queue" {
-                    let cache = QueueCache.sharedInstatnce
                     let queueId = enqueueDto.queueIdDto.queueId
+                    //let cache = QueueCache.sharedInstatnce
                     //cache.setQueueId(queueId)
                     //cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
                     
