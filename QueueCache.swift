@@ -3,8 +3,10 @@ import Foundation
 open class QueueCache {
     fileprivate var KEY_CACHE = ""
     fileprivate let KEY_QUEUE_ID = "queueId"
-    fileprivate let KEY_SESSION_TTL = "sessionTtl"
+    fileprivate let KEY_QUEUEID_TTL = "sessionTtl"
     fileprivate let KEY_EXTEND_SESSION = "extendSession"
+    fileprivate let KEY_REDIRECT_ID = "redirectId"
+    fileprivate let KEY_SESSION_TTL = "redirectTtl"
     
     static let sharedInstatnce  = QueueCache()
     
@@ -18,16 +20,28 @@ open class QueueCache {
         return queueId
     }
     
-    open func getSessionTtl() -> Int? {
+    open func getQueueIdTtl() -> Int? {
         let cache: [String : Any] = ensureCache()
-        let sessionTtl: Int? = cache[KEY_SESSION_TTL] as? Int
-        return sessionTtl
+        let queueIdTtl: Int? = cache[KEY_QUEUEID_TTL] as? Int
+        return queueIdTtl
     }
     
     open func getExtendSession() -> Bool? {
         let cache: [String : Any] = ensureCache()
         let extendSession: Bool? = cache[KEY_EXTEND_SESSION] as? Bool
         return extendSession
+    }
+    
+    open func getRedirectId() -> String? {
+        let cache: [String : Any] = ensureCache()
+        let redirectId: String? = cache[KEY_REDIRECT_ID] as? String
+        return redirectId
+    }
+    
+    open func getSessionTtl() -> Int? {
+        let cache: [String : Any] = ensureCache()
+        let sessionTtl: Int? = cache[KEY_SESSION_TTL] as? Int
+        return sessionTtl
     }
     
     open func setQueueId(_ queueId: String) {
@@ -38,8 +52,16 @@ open class QueueCache {
         update(key: KEY_EXTEND_SESSION, value: extendSession)
     }
     
-    open func setSessionTtl(_ sessionTtl: Int) {
-        update(key: KEY_SESSION_TTL, value: sessionTtl)
+    open func setRedirectId(_ redirectId: String) {
+        update(key: KEY_REDIRECT_ID, value: redirectId)
+    }
+    
+    open func setQueueIdTtl(_ queueIdTtl: Int) {
+        update(key: KEY_QUEUEID_TTL, value: queueIdTtl)
+    }
+    
+    open func setSessionTtl(_ redirectTtl: Int) {
+        update(key: KEY_SESSION_TTL, value: redirectTtl)
     }
     
     open func clear() {

@@ -27,16 +27,16 @@ open class QueueITEngine {
         
         cache.clear()//TODO: remove
         
-        let queueId = cache.getQueueId()
+        let redirectId = cache.getRedirectId()
         let sessionTtl = cache.getSessionTtl()
         if sessionTtl != nil {
             let isExtendSession = cache.getExtendSession()
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
-            queuePassed(queueId!)
+            queuePassed(redirectId!)
         } else {
-            if queueId == nil {
+            if redirectId == nil {
                 enqueue()
             }
         }
@@ -49,7 +49,7 @@ open class QueueITEngine {
                 if eventState == "Queue" {
                     let cache = QueueCache.sharedInstatnce
                     cache.setQueueId(enqueueDto.queueIdDto.queueId)
-                    cache.setSessionTtl(enqueueDto.queueIdDto.ttl)
+                    cache.setQueueIdTtl(enqueueDto.queueIdDto.ttl)
                     self.checkStatus()
                 }
             }) { (error, errorMessage) -> Void in
@@ -63,7 +63,15 @@ open class QueueITEngine {
     }
     
     func onGetStatus(statusDto: StatusDTO) {
-        
+        let redirectInfo = statusDto.redirectDto
+        if redirectInfo != nil {
+            if redirectInfo?.redirectId != nil {
+                let cache = QueueCache.sharedInstatnce
+                cache.setRedirectId((redirectInfo?.redirectId)!)
+                cache.setSessionTtl((redirectInfo?.ttl)!)
+                cache.setExtendSession((redirectInfo?.extendTtl)!)
+            }
+        }
     }
     
 }
