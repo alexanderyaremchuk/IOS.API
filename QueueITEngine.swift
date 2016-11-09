@@ -25,7 +25,7 @@ open class QueueITEngine {
     func run() {
         let cache = QueueCache.sharedInstatnce
         
-        cache.clear()//TODO: remove
+        //cache.clear()//TODO: remove
         
         let redirectId = cache.getRedirectId()
         let sessionTtl = cache.getSessionTtl()
