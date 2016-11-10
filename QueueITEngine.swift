@@ -10,9 +10,11 @@ open class QueueITEngine {
     
     var queuePassed: (String) -> Void
     var onQueueItemAssigned: (QueueItemDetails) -> Void
+    var onQueuePassed: (QueuePassedDetails) -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void,
-                onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void) {
+                onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
+                onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void) {
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
@@ -20,6 +22,7 @@ open class QueueITEngine {
         self.language = language
         self.queuePassed = queuePassed
         self.onQueueItemAssigned = onQueueItemAssigned
+        self.onQueuePassed = onQueuePassed
         for w in widgets {
             self.widgets.append(w)
         }
@@ -75,13 +78,38 @@ open class QueueITEngine {
     func onGetStatus(statusDto: StatusDTO) {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
-            if redirectInfo?.redirectId != nil {
-                let cache = QueueCache.sharedInstatnce
-                cache.setRedirectId((redirectInfo?.redirectId)!)
-                cache.setSessionTtl((redirectInfo?.ttl)!)
-                cache.setExtendSession((redirectInfo?.extendTtl)!)
-            }
+            self.handleQueuePassed(redirectInfo!, statusDto.eventDetails!)
         }
     }
     
+    func handleQueuePassed(_ redirectInfo: RedirectDTO, _ eventDetails: EventDetails) {
+        let cache = QueueCache.sharedInstatnce
+        cache.setRedirectId((redirectInfo.redirectId))
+        cache.setSessionTtl((redirectInfo.ttl))
+        cache.setExtendSession((redirectInfo.extendTtl))
+        do {
+            let passedType = try parseRedirectType(redirectInfo.redirectType)
+            self.onQueuePassed(QueuePassedDetails(passedType, eventDetails))
+        } catch {
+            print("Unknown redirectType: \(redirectInfo.redirectType)")
+        }
+    }
+    
+    func parseRedirectType(_ redirectType: String) throws -> PassedType {
+        var passedType: PassedType
+        if redirectType == "SafetyNet" {
+            passedType = .safetyNet
+        } else if redirectType == "Disabled" {
+            passedType = .disabled
+        } else if redirectType == "DirectLink" {
+            passedType = .directLink
+        } else if redirectType == "AfterEvent" {
+            passedType = .afterEvent
+        } else if redirectType == "Queue" {
+            passedType = .queue
+        } else {
+            throw PassedTypeError.invalidPassedType
+        }
+        return passedType
+    }
 }

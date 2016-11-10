@@ -1,7 +1,11 @@
 import Foundation
 
+enum PassedTypeError : Error {
+    case invalidPassedType
+}
+
 enum PassedType {
-    case safetyNet, queue, directLink, afterEvent
+    case safetyNet, queue, disabled, directLink, afterEvent
 }
 
 class QueuePassedDetails {
