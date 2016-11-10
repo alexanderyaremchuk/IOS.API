@@ -9,14 +9,17 @@ open class QueueITEngine {
     open var widgets = [Widget]()
     
     var queuePassed: (String) -> Void
+    var onQueueItemAssigned: (QueueItemDetails) -> Void
     
-    public init(customerId: String, eventId: String, configId: String, _ widgets:Widget ..., layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void) {
+    init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void,
+                onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void) {
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
         self.layoutName = layoutName
         self.language = language
         self.queuePassed = queuePassed
+        self.onQueueItemAssigned = onQueueItemAssigned
         for w in widgets {
             self.widgets.append(w)
         }
@@ -44,14 +47,24 @@ open class QueueITEngine {
             success: { (enqueueDto) -> Void in
                 let eventState = enqueueDto.eventDetails.state
                 if eventState == "Queue" {
-                    let cache = QueueCache.sharedInstatnce
-                    cache.setQueueId(enqueueDto.queueIdDto.queueId)
-                    cache.setQueueIdTtl(enqueueDto.queueIdDto.ttl)
+                    self.handleQueueIdAssigned(enqueueDto.queueIdDto, enqueueDto.eventDetails)
                     self.checkStatus()
                 }
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage
             }
+    }
+    
+    func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDetails) {
+        let cache = QueueCache.sharedInstatnce
+        cache.setQueueId(queueIdInfo.queueId)
+        cache.setQueueIdTtl(queueIdInfo.ttl)
+        
+        var queueIssueMode: QueueIssueMode = .queue
+        if queueIdInfo.issueMode == "SafetyNet" {
+            queueIssueMode = .safetyNet
+        }
+        self.onQueueItemAssigned(QueueItemDetails(queueIdInfo.queueId, queueIssueMode, eventDetails))
     }
     
     func checkStatus() {

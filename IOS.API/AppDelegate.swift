@@ -13,13 +13,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let eventId = "integrationtest2"
         let configId = "configId1"
         let widget1 = Widget("CountDown", 1)
-        let engine = QueueITEngine(customerId: customerId, eventId: eventId, configId: configId, widget1, layoutName: "", language: "", queuePassed: (onQueuePassed))
+        let engine = QueueITEngine(customerId: customerId,
+            eventId: eventId,
+            configId: configId,
+            widgets: widget1,
+            layoutName: "",
+            language: "",
+            queuePassed: (onQueuePassed),
+            onQueueItemAssigned: (onQueueItemAssigned))
+        
         engine.run()
         
         return true
     }
     
     func onQueuePassed(queueId: String) {
+        
+    }
+    
+    func onQueueItemAssigned(queueItemDetails: QueueItemDetails) {
         
     }
 
