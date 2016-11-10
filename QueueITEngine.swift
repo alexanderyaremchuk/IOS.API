@@ -8,11 +8,10 @@ open class QueueITEngine {
     open var language: String
     open var widgets = [Widget]()
     
-    var queuePassed: (String) -> Void
     var onQueueItemAssigned: (QueueItemDetails) -> Void
     var onQueuePassed: (QueuePassedDetails) -> Void
     
-    init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String, queuePassed: @escaping (_ queueId: String) -> Void,
+    init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void) {
         self.customerId = customerId
@@ -20,7 +19,6 @@ open class QueueITEngine {
         self.configId = configId
         self.layoutName = layoutName
         self.language = language
-        self.queuePassed = queuePassed
         self.onQueueItemAssigned = onQueueItemAssigned
         self.onQueuePassed = onQueuePassed
         for w in widgets {
@@ -37,7 +35,7 @@ open class QueueITEngine {
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
-            queuePassed(redirectId!)
+            onQueuePassed(redirectId!)
         } else {
             if redirectId == nil {
                 enqueue()

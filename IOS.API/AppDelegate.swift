@@ -19,17 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             widgets: widget1,
             layoutName: "",
             language: "",
-            queuePassed: (onQueuePassed),
             onQueueItemAssigned: (onQueueItemAssigned),
             onQueuePassed: (onQueuePassed))
         
         engine.run()
         
         return true
-    }
-    
-    func onQueuePassed(queueId: String) {
-        
     }
     
     func onQueueItemAssigned(queueItemDetails: QueueItemDetails) {
