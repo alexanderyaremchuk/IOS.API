@@ -27,14 +27,14 @@ open class QueueService {
                 do {
                     let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                     
-                    var eventDto: EventDTO?
+                    var eventDetails: EventDetails?
                     let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
                     if eventDetailsDict != nil {
                         let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
                         let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
                         let state = eventDetailsDict?["state"] as! String
                         let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
-                        eventDto = EventDTO(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+                        eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     }
                     
                     var redirectDto: RedirectDTO? = nil
@@ -59,7 +59,7 @@ open class QueueService {
                         widgetsResutl.append(widgetText)
                     }
                     
-                    let statusDto = StatusDTO(eventDto, redirectDto, widgetsResutl)
+                    let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResutl)
                     onGetStatus(statusDto)
                 } catch {
                     
@@ -100,9 +100,9 @@ open class QueueService {
                     let preQueueStartTime = eventDetailsDict["preQueueStartTime"] as! Int64
                     let state = eventDetailsDict["state"] as! String
                     let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
-                    let eventDto = EventDTO(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+                    let eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     
-                    success(EnqueueDTO(queueIdDto, eventDto))
+                    success(EnqueueDTO(queueIdDto, eventDetails))
                 } catch {
                     
                 }

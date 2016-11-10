@@ -2,10 +2,10 @@ import Foundation
 
 open class EnqueueDTO {
     var queueIdDto: QueueIdDTO
-    var eventDto: EventDTO
+    var eventDetails: EventDetails
     
-    init(_ queueIdDto: QueueIdDTO, _ eventDto: EventDTO) {
+    init(_ queueIdDto: QueueIdDTO, _ eventDetails: EventDetails) {
         self.queueIdDto = queueIdDto
-        self.eventDto = eventDto
+        self.eventDetails = eventDetails
     }
 }

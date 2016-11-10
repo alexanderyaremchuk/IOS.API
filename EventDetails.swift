@@ -1,30 +1,15 @@
 import Foundation
 
-public enum QueueState {
-    case idle, prequeue, queue, postQueue
-}
-
-
-open class EventDetails
-{
-    open var customerId: String;
-    open var eventId: String;
-    open var absolutePreQueueStartTime: Int;
-    open var relativePreQueueStartTime: Int;
-    open var absoluteQueueStartTime: Int;
-    open var relativeQueueStartTime: Int;
-    open var absolutePostQueueStartTime: Int;
-    open var relativePostQueueStartTime: Int;
+open class EventDetails {
+    var postQueueStartTime: Int64
+    var preQueueStartTime: Int64
+    var queueStartTime: Int64
+    var state: String
     
-    init(customerId: String, eventId: String, absolutePreQueueStartTime: Int, relativePreQueueStartTime: Int, absoluteQueueStartTime: Int,
-            relativeQueueStartTime: Int, absolutePostQueueStartTime: Int, relativePostQueueStartTime: Int) {
-        self.customerId = customerId;
-        self.eventId = eventId;
-        self.absolutePreQueueStartTime = absolutePreQueueStartTime;
-        self.relativePreQueueStartTime = relativePreQueueStartTime;
-        self.absoluteQueueStartTime = absoluteQueueStartTime;
-        self.relativeQueueStartTime = relativeQueueStartTime;
-        self.absolutePostQueueStartTime = absolutePostQueueStartTime;
-        self.relativePostQueueStartTime = relativePostQueueStartTime;
+    init(_ postQueueStartTime: Int64, _ preQueueStartTime: Int64, _ queueStartTime: Int64, _ state: String) {
+        self.postQueueStartTime = postQueueStartTime
+        self.preQueueStartTime = preQueueStartTime
+        self.queueStartTime = queueStartTime
+        self.state = state
     }
 }

@@ -1,12 +1,12 @@
 import Foundation
 
 open class StatusDTO {
-    var eventDto: EventDTO?
+    var eventDetails: EventDetails?
     var redirectDto: RedirectDTO?
     var widgetsDto: [String]?
     
-    init(_ eventDto: EventDTO?, _ redirectDto: RedirectDTO?, _ widgetsDto: [String]?) {
-        self.eventDto = eventDto
+    init(_ eventDetails: EventDetails?, _ redirectDto: RedirectDTO?, _ widgetsDto: [String]?) {
+        self.eventDetails = eventDetails
         self.redirectDto = redirectDto
         self.widgetsDto = widgetsDto
     }

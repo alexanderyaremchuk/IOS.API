@@ -24,9 +24,6 @@ open class QueueITEngine {
     
     func run() {
         let cache = QueueCache.sharedInstatnce
-        
-        //cache.clear()//TODO: remove
-        
         let redirectId = cache.getRedirectId()
         let sessionTtl = cache.getSessionTtl()
         if sessionTtl != nil {
@@ -45,7 +42,7 @@ open class QueueITEngine {
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, self.configId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
-                let eventState = enqueueDto.eventDto.state
+                let eventState = enqueueDto.eventDetails.state
                 if eventState == "Queue" {
                     let cache = QueueCache.sharedInstatnce
                     cache.setQueueId(enqueueDto.queueIdDto.queueId)

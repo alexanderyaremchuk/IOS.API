@@ -9,9 +9,10 @@
 /* Begin PBXBuildFile section */
 		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
 		1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */; };
+		1D78009C1DD4651F00B2C801 /* QueuePassedDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */; };
 		1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */; };
 		1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8161DD08342008AE794 /* EnqueueDTO.swift */; };
-		1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDTO.swift */; };
+		1D84B8191DD09202008AE794 /* EventDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDetails.swift */; };
 		1D84B81B1DD0C401008AE794 /* Widget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B81A1DD0C401008AE794 /* Widget.swift */; };
 		1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC9C76F1DCB42130053681B /* QueueCache.swift */; };
 		1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71BE1DC88F3800C6FA5D /* AppDelegate.swift */; };
@@ -39,9 +40,10 @@
 /* Begin PBXFileReference section */
 		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
 		1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectDTO.swift; sourceTree = "<group>"; };
+		1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueuePassedDetails.swift; sourceTree = "<group>"; };
 		1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueIdDTO.swift; sourceTree = "<group>"; };
 		1D84B8161DD08342008AE794 /* EnqueueDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnqueueDTO.swift; sourceTree = "<group>"; };
-		1D84B8181DD09202008AE794 /* EventDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
+		1D84B8181DD09202008AE794 /* EventDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetails.swift; sourceTree = "<group>"; };
 		1D84B81A1DD0C401008AE794 /* Widget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Widget.swift; sourceTree = "<group>"; };
 		1DC9C76F1DCB42130053681B /* QueueCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCache.swift; sourceTree = "<group>"; };
 		1DCA71B91DC88F3800C6FA5D /* IOS.API.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.API.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,10 +147,11 @@
 				1DC9C76F1DCB42130053681B /* QueueCache.swift */,
 				1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */,
 				1D84B8161DD08342008AE794 /* EnqueueDTO.swift */,
-				1D84B8181DD09202008AE794 /* EventDTO.swift */,
+				1D84B8181DD09202008AE794 /* EventDetails.swift */,
 				1D84B81A1DD0C401008AE794 /* Widget.swift */,
 				1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */,
 				1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */,
+				1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -259,8 +262,9 @@
 				1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */,
 				1DD6A7941DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift in Sources */,
 				1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */,
+				1D78009C1DD4651F00B2C801 /* QueuePassedDetails.swift in Sources */,
 				1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */,
-				1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */,
+				1D84B8191DD09202008AE794 /* EventDetails.swift in Sources */,
 				1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */,
 				1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */,
 				1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */,
