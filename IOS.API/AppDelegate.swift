@@ -32,7 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func onQueueItemAssigned(queueItemDetails: QueueItemDetails) {
-        
+        print(queueItemDetails.queueIssueMode)
+        print(queueItemDetails.queueId)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
