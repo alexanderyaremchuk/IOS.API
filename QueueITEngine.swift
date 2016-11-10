@@ -35,7 +35,7 @@ open class QueueITEngine {
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
-            onQueuePassed(redirectId!)
+            //onQueuePassed(redirectId!) TODO:
         } else {
             if redirectId == nil {
                 enqueue()
