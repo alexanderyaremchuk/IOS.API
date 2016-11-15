@@ -27,20 +27,31 @@ open class QueueITEngine {
     }
     
     func run() {
-        let cache = QueueCache.sharedInstatnce
-        let redirectId = cache.getRedirectId()
-        let sessionTtl = cache.getSessionTtl()
-        if sessionTtl != nil {
-            let isExtendSession = cache.getExtendSession()
-            if isExtendSession != nil {
-                cache.setSessionTtl(sessionTtl! * 2)
-            }
+        if isInSession(tryExtendSession: true) {
             onQueuePassed(QueuePassedDetails(nil))//TODO: should not be nill, figure out what
         } else {
-            if redirectId == nil {
-                enqueue()
+            enqueue()
+        }
+    }
+    
+    func isInSession(tryExtendSession: Bool) -> Bool {
+        let cache = QueueCache.sharedInstatnce
+        let redirectId = cache.getRedirectId()
+        if redirectId != nil {
+            let sessionTtl = cache.getSessionTtl()
+            let currentTime = NSDate().timeIntervalSince1970
+            let currentTimeValue = Int(currentTime)
+            if currentTimeValue < sessionTtl! {
+                if tryExtendSession {
+                    let isExtendSession = cache.getExtendSession()
+                    if isExtendSession != nil {
+                        cache.setSessionTtl(sessionTtl! * 2)
+                    }
+                }
+                return true
             }
         }
+        return false
     }
     
     func enqueue() {
