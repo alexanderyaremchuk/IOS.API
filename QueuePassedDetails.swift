@@ -9,11 +9,9 @@ enum PassedType {
 }
 
 class QueuePassedDetails {
-    var passedType: PassedType
-    var eventDetails: EventDetails
+    var passedType: PassedType?
     
-    init(_ passedType: PassedType, _ eventDetails: EventDetails) {
+    init(_ passedType: PassedType?) {
         self.passedType = passedType
-        self.eventDetails = eventDetails
     }
 }

@@ -35,7 +35,7 @@ open class QueueITEngine {
             if isExtendSession != nil {
                 cache.setSessionTtl(sessionTtl! * 2)
             }
-            //onQueuePassed(redirectId!) TODO:
+            onQueuePassed(QueuePassedDetails(nil))//TODO: should not be nill, figure out what
         } else {
             if redirectId == nil {
                 enqueue()
@@ -76,38 +76,16 @@ open class QueueITEngine {
     func onGetStatus(statusDto: StatusDTO) {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
-            self.handleQueuePassed(redirectInfo!, statusDto.eventDetails!)
+            self.handleQueuePassed(redirectInfo!)
         }
     }
     
-    func handleQueuePassed(_ redirectInfo: RedirectDTO, _ eventDetails: EventDetails) {
+    func handleQueuePassed(_ redirectInfo: RedirectDTO) {
         let cache = QueueCache.sharedInstatnce
         cache.setRedirectId((redirectInfo.redirectId))
         cache.setSessionTtl((redirectInfo.ttl))
         cache.setExtendSession((redirectInfo.extendTtl))
-        do {
-            let passedType = try parseRedirectType(redirectInfo.redirectType)
-            self.onQueuePassed(QueuePassedDetails(passedType, eventDetails))
-        } catch {
-            print("Unknown redirectType: \(redirectInfo.redirectType)")
-        }
-    }
-    
-    func parseRedirectType(_ redirectType: String) throws -> PassedType {
-        var passedType: PassedType
-        if redirectType == "SafetyNet" {
-            passedType = .safetyNet
-        } else if redirectType == "Disabled" {
-            passedType = .disabled
-        } else if redirectType == "DirectLink" {
-            passedType = .directLink
-        } else if redirectType == "AfterEvent" {
-            passedType = .afterEvent
-        } else if redirectType == "Queue" {
-            passedType = .queue
-        } else {
-            throw PassedTypeError.invalidPassedType
-        }
-        return passedType
+        
+        self.onQueuePassed(QueuePassedDetails(redirectInfo.passedType))
     }
 }

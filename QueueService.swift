@@ -44,7 +44,12 @@ open class QueueService {
                         let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
                         let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
                         let redirectId = redirectDetailsDict?["redirectId"] as! String
-                        redirectDto = RedirectDTO(redirectType, ttl, extendTtl, redirectId)
+                        do {
+                            let passedType = try self.parseRedirectType(redirectType)
+                            redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
+                        } catch {
+                            print("Unknown redirectType: \(redirectType)")
+                        }
                     }
                     
                     var widgetsResutl = [String]()
@@ -93,7 +98,8 @@ open class QueueService {
                     let qIdDict = dictData.value(forKey: "queueIdDetails") as! NSDictionary
                     let qId = qIdDict["queueId"] as! String
                     let ttl = Int(qIdDict["ttl"] as! CLongLong)
-                    let issueMode = qIdDict["queueIssueMode"] as! String
+                    //let issueMode = qIdDict["queueIssueMode"] as! String //TODO: reanable it
+                    let issueMode = "SafetyNet"//TODO: remove it
                     let queueIdDto = QueueIdDTO(qId, ttl, issueMode)
                     
                     let eventDetailsDict = dictData.value(forKey: "eventDetails") as! NSDictionary
@@ -135,5 +141,23 @@ open class QueueService {
         } catch {
             
         }
+    }
+    
+    func parseRedirectType(_ redirectType: String) throws -> PassedType {
+        var passedType: PassedType
+        if redirectType == "SafetyNet" {
+            passedType = .safetyNet
+        } else if redirectType == "Disabled" {
+            passedType = .disabled
+        } else if redirectType == "DirectLink" {
+            passedType = .directLink
+        } else if redirectType == "AfterEvent" {
+            passedType = .afterEvent
+        } else if redirectType == "Queue" {
+            passedType = .queue
+        } else {
+            throw PassedTypeError.invalidPassedType
+        }
+        return passedType
     }
 }
