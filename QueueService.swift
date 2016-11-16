@@ -32,8 +32,14 @@ open class QueueService {
                     if eventDetailsDict != nil {
                         let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
                         let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
-                        let state = eventDetailsDict?["state"] as! String
                         let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
+                        let stateString = eventDetailsDict?["state"] as! String
+                        var state: EventState = .queue
+                        do {
+                            state = try self.parseEventState(stateString)
+                        } catch {
+                            print("Unknown redirectType: \(stateString)")
+                        }
                         eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     }
                     
@@ -105,8 +111,14 @@ open class QueueService {
                     let eventDetailsDict = dictData.value(forKey: "eventDetails") as! NSDictionary
                     let postQueueStartTime = eventDetailsDict["postQueueStartTime"] as! Int64
                     let preQueueStartTime = eventDetailsDict["preQueueStartTime"] as! Int64
-                    let state = eventDetailsDict["state"] as! String
                     let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
+                    let stateString = eventDetailsDict["state"] as! String
+                    var state: EventState = .queue
+                    do {
+                         state = try self.parseEventState(stateString)
+                    } catch {
+                        print("Unknown redirectType: \(stateString)")
+                    }
                     let eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     
                     var redirectDto: RedirectDTO? = nil
@@ -174,5 +186,21 @@ open class QueueService {
             throw PassedTypeError.invalidPassedType
         }
         return passedType
+    }
+    
+    func parseEventState(_ state: String) throws -> EventState {
+        var eventState: EventState
+        if state == "PreQueue" {
+            eventState = .prequeue
+        } else if state == "Queue" {
+            eventState = .queue
+        } else if state == "Idle" {
+            eventState = .idle
+        } else if state == "PostQueue" {
+            eventState = .postqueue
+        } else {
+            throw EventStateError.invalidEventState
+        }
+        return eventState
     }
 }
