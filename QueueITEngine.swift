@@ -85,8 +85,10 @@ open class QueueITEngine {
     func onGetStatus(statusDto: StatusDTO) {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
+            print("RedirectId: \(redirectInfo?.redirectId)")
             self.handleQueuePassed(redirectInfo!)
         } else {
+            print("requesting status...")
             self.executeWithDelay(1, self.checkStatus)
         }
     }
@@ -108,7 +110,6 @@ open class QueueITEngine {
     
     func executeWithDelay(_ delaySec: Int, _ action: @escaping () -> ()) {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySec), execute: {
-            print("hellooo...")
             action()
         })
     }

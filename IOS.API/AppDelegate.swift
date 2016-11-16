@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func onQueuePassed(queuePassedDetails: QueuePassedDetails) {
-        
+        print("REDIRECTED!!! RedirectType: \(queuePassedDetails.passedType)")
     }
     
 
