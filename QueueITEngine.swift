@@ -86,6 +86,8 @@ open class QueueITEngine {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
             self.handleQueuePassed(redirectInfo!)
+        } else {
+            self.executeWithDelay(1, self.checkStatus)
         }
     }
     
@@ -102,5 +104,12 @@ open class QueueITEngine {
     func currentTimeUnixUtil() -> Int64 {
         let val = Int64(NSDate().timeIntervalSince1970)
         return val
+    }
+    
+    func executeWithDelay(_ delaySec: Int, _ action: @escaping () -> ()) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySec), execute: {
+            print("hellooo...")
+            action()
+        })
     }
 }
