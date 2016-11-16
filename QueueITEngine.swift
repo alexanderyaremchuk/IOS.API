@@ -1,6 +1,8 @@
 import Foundation
 
 open class QueueITEngine {
+    let CHECK_STATUS_DELAY_SEC = 1
+    
     open var customerId: String
     open var eventId: String
     open var configId: String
@@ -89,7 +91,7 @@ open class QueueITEngine {
             self.handleQueuePassed(redirectInfo!)
         } else {
             print("requesting status...")
-            self.executeWithDelay(1, self.checkStatus)
+            self.executeWithDelay(CHECK_STATUS_DELAY_SEC, self.checkStatus)
         }
     }
     
