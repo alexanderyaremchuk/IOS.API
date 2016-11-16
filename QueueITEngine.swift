@@ -58,10 +58,15 @@ open class QueueITEngine {
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, self.configId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
-                let eventState = enqueueDto.eventDetails.state
-                if eventState == "Queue" {
-                    self.handleQueueIdAssigned(enqueueDto.queueIdDto, enqueueDto.eventDetails)
-                    self.checkStatus()
+                let redirectInfo = enqueueDto.redirectDto
+                if redirectInfo != nil {
+                    self.handleQueuePassed(redirectInfo!)
+                } else {
+                    let eventState = enqueueDto.eventDetails.state
+                    if eventState == "Queue" {
+                        self.handleQueueIdAssigned(enqueueDto.queueIdDto, enqueueDto.eventDetails)
+                        self.checkStatus()
+                    }
                 }
             }) { (error, errorMessage) -> Void in
                 _ = errorMessage

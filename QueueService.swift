@@ -109,7 +109,22 @@ open class QueueService {
                     let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
                     let eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     
-                    success(EnqueueDTO(queueIdDto, eventDetails))
+                    var redirectDto: RedirectDTO? = nil
+                    let redirectDetailsDict = dictData.value(forKey: "redirectDetails") as? NSDictionary
+                    if redirectDetailsDict != nil {
+                        let redirectType = redirectDetailsDict?["redirectType"] as! String
+                        let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
+                        let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
+                        let redirectId = redirectDetailsDict?["redirectId"] as! String
+                        do {
+                            let passedType = try self.parseRedirectType(redirectType)
+                            redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
+                        } catch {
+                            print("Unknown redirectType: \(redirectType)")
+                        }
+                    }
+                    
+                    success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
                 } catch {
                     
                 }
@@ -145,7 +160,7 @@ open class QueueService {
     
     func parseRedirectType(_ redirectType: String) throws -> PassedType {
         var passedType: PassedType
-        if redirectType == "SafetyNet" {
+        if redirectType == "Safetynet" {
             passedType = .safetyNet
         } else if redirectType == "Disabled" {
             passedType = .disabled
