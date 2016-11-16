@@ -38,9 +38,9 @@ open class QueueCache {
         return redirectId
     }
     
-    open func getSessionTtl() -> Int? {
+    open func getSessionTtl() -> Int64? {
         let cache: [String : Any] = ensureCache()
-        let sessionTtl: Int? = cache[KEY_SESSION_TTL] as? Int
+        let sessionTtl: Int64? = cache[KEY_SESSION_TTL] as? Int64
         return sessionTtl
     }
     
@@ -60,7 +60,7 @@ open class QueueCache {
         update(key: KEY_QUEUEID_TTL, value: queueIdTtl)
     }
     
-    open func setSessionTtl(_ redirectTtl: Int) {
+    open func setSessionTtl(_ redirectTtl: Int64) {
         update(key: KEY_SESSION_TTL, value: redirectTtl)
     }
     
