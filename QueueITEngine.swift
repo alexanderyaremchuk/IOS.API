@@ -88,7 +88,7 @@ open class QueueITEngine {
     func onGetStatus(statusDto: StatusDTO) {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
-            print("RedirectId: \(redirectInfo?.redirectId)")
+            print("RedirectId: \(redirectInfo!.redirectId)")
             self.handleQueuePassed(redirectInfo!)
         } else {
             print("requesting status...")
