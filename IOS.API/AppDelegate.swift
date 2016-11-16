@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             layoutName: "",
             language: "",
             onQueueItemAssigned: (onQueueItemAssigned),
-            onQueuePassed: (onQueuePassed))
+            onQueuePassed: (onQueuePassed),
+            onPostQueue: (onPostQueue))
         
         engine.run()
         
@@ -34,6 +35,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func onQueuePassed(queuePassedDetails: QueuePassedDetails) {
         print("REDIRECTED!!! RedirectType: \(queuePassedDetails.passedType)")
+    }
+    
+    func onPostQueue() {
+        print("Postqueue published...")
     }
     
 

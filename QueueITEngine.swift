@@ -12,10 +12,12 @@ open class QueueITEngine {
     
     var onQueueItemAssigned: (QueueItemDetails) -> Void
     var onQueuePassed: (QueuePassedDetails) -> Void
+    var onPostQueue: () -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
-                onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void) {
+                onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
+                onPostQueue: @escaping () -> Void) {
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
@@ -23,6 +25,7 @@ open class QueueITEngine {
         self.language = language
         self.onQueueItemAssigned = onQueueItemAssigned
         self.onQueuePassed = onQueuePassed
+        self.onPostQueue = onPostQueue
         for w in widgets {
             self.widgets.append(w)
         }
@@ -95,6 +98,8 @@ open class QueueITEngine {
         if redirectInfo != nil {
             print("RedirectId: \(redirectInfo!.redirectId)")
             self.handleQueuePassed(redirectInfo!)
+        } else if statusDto.eventDetails?.state == .postqueue {
+            self.onPostQueue()
         } else {
             print("requesting status...")
             self.executeWithDelay(CHECK_STATUS_DELAY_SEC, self.checkStatus)
