@@ -99,20 +99,20 @@ open class QueueService {
         self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
                 do {
-                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as! NSDictionary
+                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                     
-                    let qIdDict = dictData.value(forKey: "queueIdDetails") as! NSDictionary
-                    let qId = qIdDict["queueId"] as! String
-                    let ttl = Int(qIdDict["ttl"] as! CLongLong)
-                    //let issueMode = qIdDict["queueIssueMode"] as! String //TODO: reanable it
+                    let qIdDict = dictData?.value(forKey: "queueIdDetails") as? NSDictionary
+                    let qId = qIdDict?["queueId"] as! String
+                    let ttl = Int(qIdDict?["ttl"] as! CLongLong)
+                    //let issueMode = qIdDict?["queueIssueMode"] as! String //TODO: reanable it
                     let issueMode = "SafetyNet"//TODO: remove it
                     let queueIdDto = QueueIdDTO(qId, ttl, issueMode)
                     
-                    let eventDetailsDict = dictData.value(forKey: "eventDetails") as! NSDictionary
-                    let postQueueStartTime = eventDetailsDict["postQueueStartTime"] as! Int64
-                    let preQueueStartTime = eventDetailsDict["preQueueStartTime"] as! Int64
-                    let queueStartTime = eventDetailsDict["queueStartTime"] as! Int64
-                    let stateString = eventDetailsDict["state"] as! String
+                    let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
+                    let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
+                    let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
+                    let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
+                    let stateString = eventDetailsDict?["state"] as! String
                     var state: EventState = .queue
                     do {
                          state = try self.parseEventState(stateString)
@@ -122,7 +122,7 @@ open class QueueService {
                     let eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                     
                     var redirectDto: RedirectDTO? = nil
-                    let redirectDetailsDict = dictData.value(forKey: "redirectDetails") as? NSDictionary
+                    let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
                     if redirectDetailsDict != nil {
                         let redirectType = redirectDetailsDict?["redirectType"] as! String
                         let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)

@@ -10,8 +10,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let customerId = "sasha"
-        //let eventId = "integrationtest2"
-        let eventId = "ios1"
+        let eventId = "integrationtest2"
+        //let eventId = "ios1"
         let configId = "configId1"
         let widget1 = Widget("CountDown", 1)
         let engine = QueueITEngine(customerId: customerId,
