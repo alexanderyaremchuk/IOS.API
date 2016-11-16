@@ -45,7 +45,8 @@ open class QueueITEngine {
                 if tryExtendSession {
                     let isExtendSession = cache.getExtendSession()
                     if isExtendSession != nil {
-                        cache.setSessionTtl(sessionTtl! * 2)
+                        let ttlDelta = cache.getSessionTtlDelta()
+                        cache.setSessionTtl(sessionTtl! + ttlDelta!)
                     }
                 }
                 return true
@@ -98,8 +99,8 @@ open class QueueITEngine {
     func handleQueuePassed(_ redirectInfo: RedirectDTO) {
         let cache = QueueCache.sharedInstatnce
         cache.setRedirectId((redirectInfo.redirectId))
-        let ttl = redirectInfo.ttl + currentTimeUnixUtil()
-        cache.setSessionTtl((ttl))
+        cache.setSessionTtlDelta(redirectInfo.ttl)
+        cache.setSessionTtl(redirectInfo.ttl + currentTimeUnixUtil())
         cache.setExtendSession((redirectInfo.extendTtl))
         
         self.onQueuePassed(QueuePassedDetails(redirectInfo.passedType))

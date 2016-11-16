@@ -3,10 +3,11 @@ import Foundation
 open class QueueCache {
     fileprivate var KEY_CACHE = ""
     fileprivate let KEY_QUEUE_ID = "queueId"
-    fileprivate let KEY_QUEUEID_TTL = "sessionTtl"
+    fileprivate let KEY_QUEUEID_TTL = "queueIdTtl"
     fileprivate let KEY_EXTEND_SESSION = "extendSession"
     fileprivate let KEY_REDIRECT_ID = "redirectId"
-    fileprivate let KEY_SESSION_TTL = "redirectTtl"
+    fileprivate let KEY_SESSION_TTL = "sessionTtl"
+    fileprivate let KEY_SESSION_TTL_DELTA = "sessionTtlDelta"
     
     static let sharedInstatnce  = QueueCache()
     
@@ -44,6 +45,12 @@ open class QueueCache {
         return sessionTtl
     }
     
+    open func getSessionTtlDelta() -> Int? {
+        let cache: [String : Any] = ensureCache()
+        let sessionTtlDelta: Int? = cache[KEY_SESSION_TTL_DELTA] as? Int
+        return sessionTtlDelta
+    }
+    
     open func setQueueId(_ queueId: String) {
         update(key: KEY_QUEUE_ID, value: queueId)
     }
@@ -60,8 +67,12 @@ open class QueueCache {
         update(key: KEY_QUEUEID_TTL, value: queueIdTtl)
     }
     
-    open func setSessionTtl(_ redirectTtl: Int64) {
-        update(key: KEY_SESSION_TTL, value: redirectTtl)
+    open func setSessionTtl(_ sessionTtl: Int64) {
+        update(key: KEY_SESSION_TTL, value: sessionTtl)
+    }
+    
+    open func setSessionTtlDelta(_ sessionTtlDelta: Int) {
+        update(key: KEY_SESSION_TTL_DELTA, value: sessionTtlDelta)
     }
     
     open func clear() {
