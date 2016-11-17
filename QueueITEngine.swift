@@ -48,7 +48,9 @@ open class QueueITEngine {
         let redirectId = cache.getRedirectId()
         if redirectId != nil {
             let sessionTtl = cache.getSessionTtl()
-            if currentTimeUnixUtil() < sessionTtl! {
+            let currentDate = Date()
+            let sessionDate = Date(timeIntervalSince1970: Double(sessionTtl!))
+            if(currentDate < sessionDate) {
                 if tryExtendSession {
                     let isExtendSession = cache.getExtendSession()
                     if isExtendSession != nil {
