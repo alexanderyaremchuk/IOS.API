@@ -13,11 +13,13 @@ open class QueueITEngine {
     var onQueueItemAssigned: (QueueItemDetails) -> Void
     var onQueuePassed: (QueuePassedDetails) -> Void
     var onPostQueue: () -> Void
+    var onIdleQueue: () -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
-                onPostQueue: @escaping () -> Void) {
+                onPostQueue: @escaping () -> Void,
+                onIdleQueue: @escaping () -> Void) {
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
@@ -26,6 +28,7 @@ open class QueueITEngine {
         self.onQueueItemAssigned = onQueueItemAssigned
         self.onQueuePassed = onQueuePassed
         self.onPostQueue = onPostQueue
+        self.onIdleQueue = onIdleQueue
         for w in widgets {
             self.widgets.append(w)
         }
@@ -72,6 +75,8 @@ open class QueueITEngine {
                         self.checkStatus()
                     } else if eventState == .postqueue {
                         self.onPostQueue()
+                    } else if eventState == .idle {
+                        self.onIdleQueue()
                     }
                 }
             }) { (error, errorMessage) -> Void in

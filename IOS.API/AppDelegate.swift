@@ -22,7 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             language: "",
             onQueueItemAssigned: (onQueueItemAssigned),
             onQueuePassed: (onQueuePassed),
-            onPostQueue: (onPostQueue))
+            onPostQueue: (onPostQueue),
+            onIdleQueue: (onIdleQueue))
         
         engine.run()
         
@@ -40,6 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func onPostQueue() {
         print("Postqueue published...")
+    }
+    
+    func onIdleQueue() {
+        print("Idle queue published...")
     }
     
 
