@@ -29,6 +29,7 @@ open class QueueITEngine {
         for w in widgets {
             self.widgets.append(w)
         }
+        QueueCache.sharedInstatnce.initialize(customerId, eventId)
     }
     
     func run() {
@@ -67,7 +68,7 @@ open class QueueITEngine {
                 } else {
                     let eventState = enqueueDto.eventDetails.state
                     if eventState == .queue {
-                        self.handleQueueIdAssigned(enqueueDto.queueIdDto, enqueueDto.eventDetails)
+                        self.handleQueueIdAssigned(enqueueDto.queueIdDto!, enqueueDto.eventDetails)
                         self.checkStatus()
                     }
                 }

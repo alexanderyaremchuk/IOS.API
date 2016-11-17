@@ -24,57 +24,53 @@ open class QueueService {
         
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
-                do {
-                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                    
-                    var eventDetails: EventDetails?
-                    let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
-                    if eventDetailsDict != nil {
-                        let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
-                        let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
-                        let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
-                        let stateString = eventDetailsDict?["state"] as! String
-                        var state: EventState = .queue
-                        do {
-                            state = try self.parseEventState(stateString)
-                        } catch {
-                            print("Unknown redirectType: \(stateString)")
-                        }
-                        eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+                let dictData = self.dataToDict(data)
+                
+                var eventDetails: EventDetails?
+                let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
+                if eventDetailsDict != nil {
+                    let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
+                    let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
+                    let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
+                    let stateString = eventDetailsDict?["state"] as! String
+                    var state: EventState = .queue
+                    do {
+                        state = try self.parseEventState(stateString)
+                    } catch {
+                        print("Unknown redirectType: \(stateString)")
                     }
-                    
-                    var redirectDto: RedirectDTO? = nil
-                    let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
-                    if redirectDetailsDict != nil {
-                        let redirectType = redirectDetailsDict?["redirectType"] as! String
-                        let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
-                        let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
-                        let redirectId = redirectDetailsDict?["redirectId"] as! String
-                        do {
-                            let passedType = try self.parseRedirectType(redirectType)
-                            redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
-                        } catch {
-                            print("Unknown redirectType: \(redirectType)")
-                        }
-                    }
-                    
-                    var widgetsResutl = [String]()
-                    let widgetArr = dictData?.value(forKey: "widgets") as? NSArray
-                    
-                    for w in widgetArr! {
-                        var widgetText = String(describing: w)
-                        widgetText = widgetText.replacingOccurrences(of: "\n", with: "")
-                        widgetText = widgetText.replacingOccurrences(of: " ", with: "")
-                        widgetText = widgetText.replacingOccurrences(of: "{", with: "")
-                        widgetText = widgetText.replacingOccurrences(of: "}", with: "")
-                        widgetsResutl.append(widgetText)
-                    }
-                    
-                    let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResutl)
-                    onGetStatus(statusDto)
-                } catch {
-                    
+                    eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
                 }
+                
+                var redirectDto: RedirectDTO? = nil
+                let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
+                if redirectDetailsDict != nil {
+                    let redirectType = redirectDetailsDict?["redirectType"] as! String
+                    let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
+                    let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
+                    let redirectId = redirectDetailsDict?["redirectId"] as! String
+                    do {
+                        let passedType = try self.parseRedirectType(redirectType)
+                        redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
+                    } catch {
+                        print("Unknown redirectType: \(redirectType)")
+                    }
+                }
+                
+                var widgetsResutl = [String]()
+                let widgetArr = dictData?.value(forKey: "widgets") as? NSArray
+                
+                for w in widgetArr! {
+                    var widgetText = String(describing: w)
+                    widgetText = widgetText.replacingOccurrences(of: "\n", with: "")
+                    widgetText = widgetText.replacingOccurrences(of: " ", with: "")
+                    widgetText = widgetText.replacingOccurrences(of: "{", with: "")
+                    widgetText = widgetText.replacingOccurrences(of: "}", with: "")
+                    widgetsResutl.append(widgetText)
+                }
+                
+                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResutl)
+                onGetStatus(statusDto)
             })
             { (error, errorMessage) -> Void in
             }
@@ -85,7 +81,6 @@ open class QueueService {
         let userId = "sashaUnique"
         let userAgent = "myUserAgent"
         let sdkVersion = "v1.0"
-        
         var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configId]
         if layoutName != nil {
             body["layoutName"] = layoutName
@@ -93,53 +88,14 @@ open class QueueService {
         if language != nil {
             body["language"] = language
         }
-        
         let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
-        
         self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
-                do {
-                    let dictData = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
-                    
-                    let qIdDict = dictData?.value(forKey: "queueIdDetails") as? NSDictionary
-                    let qId = qIdDict?["queueId"] as! String
-                    let ttl = Int(qIdDict?["ttl"] as! CLongLong)
-                    //let issueMode = qIdDict?["queueIssueMode"] as! String //TODO: reanable it
-                    let issueMode = "SafetyNet"//TODO: remove it
-                    let queueIdDto = QueueIdDTO(qId, ttl, issueMode)
-                    
-                    let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
-                    let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
-                    let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
-                    let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
-                    let stateString = eventDetailsDict?["state"] as! String
-                    var state: EventState = .queue
-                    do {
-                         state = try self.parseEventState(stateString)
-                    } catch {
-                        print("Unknown redirectType: \(stateString)")
-                    }
-                    let eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
-                    
-                    var redirectDto: RedirectDTO? = nil
-                    let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
-                    if redirectDetailsDict != nil {
-                        let redirectType = redirectDetailsDict?["redirectType"] as! String
-                        let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
-                        let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
-                        let redirectId = redirectDetailsDict?["redirectId"] as! String
-                        do {
-                            let passedType = try self.parseRedirectType(redirectType)
-                            redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
-                        } catch {
-                            print("Unknown redirectType: \(redirectType)")
-                        }
-                    }
-                    
-                    success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
-                } catch {
-                    
-                }
+                let dictData = self.dataToDict(data)
+                let queueIdDto = self.extractQueueIdDetails(dictData!)
+                let eventDetails = self.extractEventDetails(dictData!)
+                let redirectDto = self.extractRedirectDetails(dictData!)
+                success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
             })
             { (error, errorMessage) -> Void in
             }
@@ -202,5 +158,55 @@ open class QueueService {
             throw EventStateError.invalidEventState
         }
         return eventState
+    }
+    
+    func dataToDict(_ data: Data) -> NSDictionary? {
+        return try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+    }
+    
+    func extractQueueIdDetails(_ dataDict: NSDictionary) -> QueueIdDTO? {
+        var queueIdDto: QueueIdDTO? = nil
+        let qIdDict = dataDict.value(forKey: "queueIdDetails") as? NSDictionary
+        if qIdDict != nil {
+            let qId = qIdDict?["queueId"] as! String
+            let ttl = Int(qIdDict?["ttl"] as! CLongLong)
+            //let issueMode = qIdDict?["queueIssueMode"] as! String //TODO: reanable it
+            let issueMode = "SafetyNet"//TODO: remove it
+            queueIdDto = QueueIdDTO(qId, ttl, issueMode)
+        }
+        return queueIdDto
+    }
+    
+    func extractEventDetails(_ dataDict: NSDictionary) -> EventDetails {
+        let eventDetailsDict = dataDict.value(forKey: "eventDetails") as? NSDictionary
+        let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
+        let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
+        let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
+        let stateString = eventDetailsDict?["state"] as! String
+        var state: EventState = .queue
+        do {
+            state = try self.parseEventState(stateString)
+        } catch {
+            print("Unknown redirectType: \(stateString)")
+        }
+        return EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+    }
+    
+    func extractRedirectDetails(_ dataDict: NSDictionary) -> RedirectDTO? {
+        var redirectDto: RedirectDTO? = nil
+        let redirectDetailsDict = dataDict.value(forKey: "redirectDetails") as? NSDictionary
+        if redirectDetailsDict != nil {
+            let redirectType = redirectDetailsDict?["redirectType"] as! String
+            let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
+            let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
+            let redirectId = redirectDetailsDict?["redirectId"] as! String
+            do {
+                let passedType = try self.parseRedirectType(redirectType)
+                redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
+            } catch {
+                print("Unknown redirectType: \(redirectType)")
+            }
+        }
+        return redirectDto
     }
 }

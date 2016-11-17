@@ -11,7 +11,7 @@ open class QueueCache {
     
     static let sharedInstatnce  = QueueCache()
     
-    func initialize(_ customerId: String, eventId: String) {
+    func initialize(_ customerId: String, _ eventId: String) {
         KEY_CACHE = "\(customerId)-\(eventId)"
     }
     
