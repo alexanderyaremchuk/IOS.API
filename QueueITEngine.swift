@@ -70,6 +70,8 @@ open class QueueITEngine {
                     if eventState == .queue {
                         self.handleQueueIdAssigned(enqueueDto.queueIdDto!, enqueueDto.eventDetails)
                         self.checkStatus()
+                    } else if eventState == .postqueue {
+                        self.onPostQueue()
                     }
                 }
             }) { (error, errorMessage) -> Void in
