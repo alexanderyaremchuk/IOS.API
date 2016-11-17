@@ -9,7 +9,6 @@ open class QueueService {
     
     func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
         var body: [String : Any] = ["configurationId" : configId]
-        
         var widgetArr = [Any]()
         var widgetItemDict = [String : Any]()
         for w in widgets {
@@ -17,64 +16,19 @@ open class QueueService {
             widgetItemDict["version"] = w.version
             widgetArr.append(widgetItemDict)
         }
-        
         body["widgets"] = widgetArr
-        
         let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/\(queueId)/status"
-        
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
-                
-                var eventDetails: EventDetails?
-                let eventDetailsDict = dictData?.value(forKey: "eventDetails") as? NSDictionary
-                if eventDetailsDict != nil {
-                    let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
-                    let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
-                    let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
-                    let stateString = eventDetailsDict?["state"] as! String
-                    var state: EventState = .queue
-                    do {
-                        state = try self.parseEventState(stateString)
-                    } catch {
-                        print("Unknown redirectType: \(stateString)")
-                    }
-                    eventDetails = EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
-                }
-                
-                var redirectDto: RedirectDTO? = nil
-                let redirectDetailsDict = dictData?.value(forKey: "redirectDetails") as? NSDictionary
-                if redirectDetailsDict != nil {
-                    let redirectType = redirectDetailsDict?["redirectType"] as! String
-                    let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
-                    let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
-                    let redirectId = redirectDetailsDict?["redirectId"] as! String
-                    do {
-                        let passedType = try self.parseRedirectType(redirectType)
-                        redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
-                    } catch {
-                        print("Unknown redirectType: \(redirectType)")
-                    }
-                }
-                
-                var widgetsResutl = [String]()
-                let widgetArr = dictData?.value(forKey: "widgets") as? NSArray
-                
-                for w in widgetArr! {
-                    var widgetText = String(describing: w)
-                    widgetText = widgetText.replacingOccurrences(of: "\n", with: "")
-                    widgetText = widgetText.replacingOccurrences(of: " ", with: "")
-                    widgetText = widgetText.replacingOccurrences(of: "{", with: "")
-                    widgetText = widgetText.replacingOccurrences(of: "}", with: "")
-                    widgetsResutl.append(widgetText)
-                }
-                
-                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResutl)
+                let eventDetails = self.extractEventDetails(dictData!)
+                let redirectDto = self.extractRedirectDetails(dictData!)
+                let widgetsResult = self.extractWidgetDetails(dictData!)
+                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult)
                 onGetStatus(statusDto)
             })
             { (error, errorMessage) -> Void in
             }
-
     }
     
     func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
@@ -208,5 +162,19 @@ open class QueueService {
             }
         }
         return redirectDto
+    }
+    
+    func extractWidgetDetails(_ dataDict: NSDictionary) -> [String] {
+        var widgetsResutl = [String]()
+        let widgetArr = dataDict.value(forKey: "widgets") as? NSArray
+        for w in widgetArr! {
+            var widgetText = String(describing: w)
+            widgetText = widgetText.replacingOccurrences(of: "\n", with: "")
+            widgetText = widgetText.replacingOccurrences(of: " ", with: "")
+            widgetText = widgetText.replacingOccurrences(of: "{", with: "")
+            widgetText = widgetText.replacingOccurrences(of: "}", with: "")
+            widgetsResutl.append(widgetText)
+        }
+        return widgetsResutl
     }
 }
