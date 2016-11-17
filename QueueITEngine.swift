@@ -45,17 +45,14 @@ open class QueueITEngine {
     
     func isInSession(tryExtendSession: Bool) -> Bool {
         let cache = QueueCache.sharedInstatnce
-        let redirectId = cache.getRedirectId()
-        if redirectId != nil {
-            let sessionTtl = cache.getSessionTtl()
+        if cache.getRedirectId() != nil {
             let currentDate = Date()
-            let sessionDate = Date(timeIntervalSince1970: Double(sessionTtl!))
+            let sessionDate = Date(timeIntervalSince1970: Double(cache.getSessionTtl()!))
             if(currentDate < sessionDate) {
                 if tryExtendSession {
                     let isExtendSession = cache.getExtendSession()
                     if isExtendSession != nil {
-                        let ttlDelta = cache.getSessionTtlDelta()
-                        cache.setSessionTtl(sessionTtl! + ttlDelta!)
+                        cache.setSessionTtl(currentTimeUnixUtil() + cache.getSessionTtlDelta()!)
                     }
                 }
                 return true
