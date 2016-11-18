@@ -70,8 +70,6 @@ open class QueueITEngine {
         return false
     }
     
-    
-    
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, self.configId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
@@ -93,9 +91,7 @@ open class QueueITEngine {
             failure: { (error, errorStatusCode) -> Void in
                 if (errorStatusCode >= 400 && errorStatusCode < 500)
                 {
-                    print("retrying, delta: \(self.deltaSec)")
-                    try! self.retryMonitor(self.enqueue)
-                    //TODO: parse error into object, find out what is 400-related error, and then just throw corresponding exception (they don't need to catch it)
+                    
                 } else if errorStatusCode >= 500 {
                     print("retrying, delta: \(self.deltaSec)")
                     try! self.retryMonitor(self.enqueue)

@@ -32,6 +32,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
             let data = self.data!
             self.successCallback(data as Data)
         } else {
+            let datastring = NSString(data: self.data!, encoding: String.Encoding.utf8.rawValue)
             self.failureCallback(nil, self.actualStatusCode!)
         }
     }
