@@ -7,7 +7,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
     var conn: NSURLConnection?
     var expectedStatusCode: Int
     var actualStatusCode: Int?
-    var data: NSMutableData?
+    var data: Data?
     var successCallback: QueueServiceSuccess
     var failureCallback: QueueServiceFailure
     
@@ -21,7 +21,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
     }
     
     func initiateRequest() {
-        self.data = NSMutableData()
+        self.data = NSMutableData() as Data
         self.actualStatusCode = NSNotFound
         self.conn = NSURLConnection(request: self.request, delegate: self)
     }
@@ -31,6 +31,8 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
         if hasExpectedStatusCode() {
             let data = self.data!
             self.successCallback(data as Data)
+        } else {
+            self.failureCallback(nil, self.actualStatusCode!)
         }
     }
     
@@ -49,7 +51,6 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
     
     open func connection(_ conn:NSURLConnection, didFailWithError error:Error)
     {
-
     }
     
     func hasExpectedStatusCode() -> Bool {

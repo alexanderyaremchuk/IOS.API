@@ -1,7 +1,13 @@
 import Foundation
 
+enum QueueItServerFailure : Error {
+    case serviceUnavailable, invalidCutomerId, invalidEventId, invalidWidgetName
+}
+
 open class QueueITEngine {
     let CHECK_STATUS_DELAY_SEC = 1
+    let MAX_RETRY_SEC = 10
+    let INITIAL_WAIT_RETRY_SEC = 1
     
     open var customerId: String
     open var eventId: String
@@ -9,6 +15,8 @@ open class QueueITEngine {
     open var layoutName: String
     open var language: String
     open var widgets = [Widget]()
+    var deltaSec: Int
+    
     
     var onQueueItemAssigned: (QueueItemDetails) -> Void
     var onQueuePassed: (QueuePassedDetails) -> Void
@@ -20,6 +28,7 @@ open class QueueITEngine {
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
                 onPostQueue: @escaping () -> Void,
                 onIdleQueue: @escaping () -> Void) {
+        self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
         self.customerId = customerId
         self.eventId = eventId
         self.configId = configId
@@ -61,6 +70,8 @@ open class QueueITEngine {
         return false
     }
     
+    
+    
     func enqueue() {
         QueueService.sharedInstance.enqueue(self.customerId, self.eventId, self.configId, layoutName: nil, language: nil,
             success: { (enqueueDto) -> Void in
@@ -78,9 +89,18 @@ open class QueueITEngine {
                         self.onIdleQueue()
                     }
                 }
-            }) { (error, errorMessage) -> Void in
-                _ = errorMessage
-            }
+            },
+            failure: { (error, errorStatusCode) -> Void in
+                if (errorStatusCode >= 400 && errorStatusCode < 500)
+                {
+                    print("retrying, delta: \(self.deltaSec)")
+                    try! self.retryMonitor(self.enqueue)
+                    //TODO: parse error into object, find out what is 400-related error, and then just throw corresponding exception (they don't need to catch it)
+                } else if errorStatusCode >= 500 {
+                    print("retrying, delta: \(self.deltaSec)")
+                    try! self.retryMonitor(self.enqueue)
+                }
+            })
     }
     
     func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDetails) {
@@ -131,5 +151,15 @@ open class QueueITEngine {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(delaySec), execute: {
             action()
         })
+    }
+    
+    func retryMonitor(_ action: @escaping () -> Void) throws {
+        if (self.deltaSec < MAX_RETRY_SEC)
+        {
+            executeWithDelay(self.deltaSec, action)
+            self.deltaSec = self.deltaSec * 2;
+        } else {
+            throw QueueItServerFailure.serviceUnavailable
+        }
     }
 }

@@ -1,11 +1,36 @@
 import Foundation
 
 typealias QueueServiceSuccess = (_ data: Data) -> Void
-typealias QueueServiceFailure = (_ error: NSError, _ errorMessage: String) -> Void
+typealias QueueServiceFailure = (_ error: Error?, _ errorStatusCode: Int) -> Void
 
 open class QueueService {
     
     static let sharedInstance = QueueService()
+    
+    func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void, failure:@escaping QueueServiceFailure) {
+        let userId = "sashaUnique"
+        let userAgent = "myUserAgent"
+        let sdkVersion = "v1.0"
+        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configId]
+        if layoutName != nil {
+            body["layoutName"] = layoutName
+        }
+        if language != nil {
+            body["language"] = language
+        }
+        let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
+        self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
+            success: { (data) -> Void in
+                let dictData = self.dataToDict(data)
+                let queueIdDto = self.extractQueueIdDetails(dictData!)
+                let eventDetails = self.extractEventDetails(dictData!)
+                let redirectDto = self.extractRedirectDetails(dictData!)
+                success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
+        })
+        { (error, errorStatusCode) -> Void in
+            failure(error, errorStatusCode)
+        }
+    }
     
     func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
         var body: [String : Any] = ["configurationId" : configId]
@@ -27,31 +52,8 @@ open class QueueService {
                 let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult)
                 onGetStatus(statusDto)
             })
-            { (error, errorMessage) -> Void in
-            }
-    }
-    
-    func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void,failure:QueueServiceFailure) {
-        let userId = "sashaUnique"
-        let userAgent = "myUserAgent"
-        let sdkVersion = "v1.0"
-        var body: [String : String] = ["userId" : userId, "userAgent" : userAgent, "sdkVersion" : sdkVersion, "configurationId" : configId]
-        if layoutName != nil {
-            body["layoutName"] = layoutName
-        }
-        if language != nil {
-            body["language"] = language
-        }
-        let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
-        self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
-            success: { (data) -> Void in
-                let dictData = self.dataToDict(data)
-                let queueIdDto = self.extractQueueIdDetails(dictData!)
-                let eventDetails = self.extractEventDetails(dictData!)
-                let redirectDto = self.extractRedirectDetails(dictData!)
-                success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
-            })
-            { (error, errorMessage) -> Void in
+            { (error, errorStatusCode) -> Void in
+                
             }
     }
     
