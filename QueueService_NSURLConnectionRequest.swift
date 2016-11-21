@@ -1,5 +1,9 @@
 import Foundation
 
+enum UrlRequestFailure : Error {
+    case invalidUrl(String)
+}
+
 open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate
 {
     var request: URLRequest
@@ -44,7 +48,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
                 guard let errorsJson = dict["errors"] as? [[String: Any]] else { throw JSONParseError.missingErrors}
                 let id = errorsJson[0]["id"] as? String
                 let message = errorsJson[0]["message"] as? String
-                self.failureCallback(ErrorInfo(id!, message!), self.actualStatusCode!)
+                try! self.failureCallback(ErrorInfo(id!, message!), self.actualStatusCode!)
             }
             catch {
             }
@@ -66,6 +70,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
     
     open func connection(_ conn:NSURLConnection, didFailWithError error:Error)
     {
+        try! self.failureCallback(ErrorInfo(nil, error.localizedDescription), 400)
     }
     
     func hasExpectedStatusCode() -> Bool {

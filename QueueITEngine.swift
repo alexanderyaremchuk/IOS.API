@@ -1,7 +1,7 @@
 import Foundation
 
 enum QueueItServerFailure : Error {
-    case serviceUnavailable, invalidCutomerId, invalidEventId, invalidWidgetName
+    case serviceUnavailable, invalidHostName(String), invalidEventId(String), invalidWidgetName(String)
 }
 
 open class QueueITEngine {
@@ -91,6 +91,11 @@ open class QueueITEngine {
             failure: { (error, errorStatusCode) -> Void in
                 if (errorStatusCode >= 400 && errorStatusCode < 500)
                 {
+                    if error!.message == "A server with the specified hostname could not be found." {
+                        throw QueueItServerFailure.invalidHostName(QueueService.sharedInstance.getHostName())
+                    } else if error!.id == "EventNotFound" {
+                        throw QueueItServerFailure.invalidEventId(error!.message)
+                    }
                     
                 } else if errorStatusCode >= 500 {
                     print("retrying, delta: \(self.deltaSec)")

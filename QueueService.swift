@@ -1,13 +1,22 @@
 import Foundation
 
 typealias QueueServiceSuccess = (_ data: Data) -> Void
-typealias QueueServiceFailure = (_ error: ErrorInfo?, _ errorStatusCode: Int) -> Void
+typealias QueueServiceFailure = (_ error: ErrorInfo?, _ errorStatusCode: Int) throws -> Void
 
 open class QueueService {
     
     static let sharedInstance = QueueService()
     
+    let httpProtocl = "http://"
+    let hostName = "test.queue-it.net"
+    var customerId = ""
+    
+    func getHostName() -> String {
+        return "\(httpProtocl)\(customerId).\(hostName)"
+    }
+    
     func enqueue(_ customerId:String, _ eventId:String, _ configId:String, layoutName:String?, language:String?, success:@escaping (_ status: EnqueueDTO) -> Void, failure:@escaping QueueServiceFailure) {
+        self.customerId = customerId
         let userId = "sashaUnique"
         let userAgent = "myUserAgent"
         let sdkVersion = "v1.0"
@@ -18,7 +27,7 @@ open class QueueService {
         if language != nil {
             body["language"] = language
         }
-        let enqueueUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
+        let enqueueUrl = "\(getHostName())/api/nativeapp/\(customerId)/\(eventId)/queue/enqueue"
         self.submitPOSTPath(enqueueUrl, bodyDict: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
@@ -28,11 +37,12 @@ open class QueueService {
                 success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
         })
         { (error, errorStatusCode) -> Void in
-            failure(error, errorStatusCode)
+            try! failure(error, errorStatusCode)
         }
     }
     
     func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
+        self.customerId = customerId
         var body: [String : Any] = ["configurationId" : configId]
         var widgetArr = [Any]()
         var widgetItemDict = [String : Any]()
@@ -42,7 +52,7 @@ open class QueueService {
             widgetArr.append(widgetItemDict)
         }
         body["widgets"] = widgetArr
-        let statusUrl = "http://\(customerId).test.queue-it.net/api/nativeapp/\(customerId)/\(eventId)/queue/\(queueId)/status"
+        let statusUrl = "\(self.getHostName())/api/nativeapp/\(customerId)/\(eventId)/queue/\(queueId)/status"
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
