@@ -1,7 +1,7 @@
 import Foundation
 
 typealias QueueServiceSuccess = (_ data: Data) -> Void
-typealias QueueServiceFailure = (_ error: Error?, _ errorStatusCode: Int) -> Void
+typealias QueueServiceFailure = (_ error: ErrorInfo?, _ errorStatusCode: Int) -> Void
 
 open class QueueService {
     
