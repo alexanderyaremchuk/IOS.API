@@ -143,17 +143,9 @@ open class QueueService {
     
     func extractEventDetails(_ dataDict: NSDictionary) -> EventDetails {
         let eventDetailsDict = dataDict.value(forKey: "eventDetails") as? NSDictionary
-        let postQueueStartTime = eventDetailsDict?["postQueueStartTime"] as! Int64
-        let preQueueStartTime = eventDetailsDict?["preQueueStartTime"] as! Int64
-        let queueStartTime = eventDetailsDict?["queueStartTime"] as! Int64
         let stateString = eventDetailsDict?["state"] as! String
-        var state: EventState = .queue
-        do {
-            state = try self.parseEventState(stateString)
-        } catch {
-            print("Unknown redirectType: \(stateString)")
-        }
-        return EventDetails(postQueueStartTime, preQueueStartTime, queueStartTime, state)
+        let state: EventState = try! self.parseEventState(stateString)
+        return EventDetails(state)
     }
     
     func extractRedirectDetails(_ dataDict: NSDictionary) -> RedirectDTO? {
