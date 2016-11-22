@@ -108,9 +108,11 @@ open class QueueITEngine {
     func onGetStatus(statusDto: StatusDTO) {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
-            self.handleQueuePassed(redirectInfo!)
-        } else if statusDto.redirectDto?.passedType == .afterEvent {
-            self.onPostQueue()
+            if redirectInfo!.passedType == .afterEvent {
+                self.onPostQueue()
+            } else {
+                self.handleQueuePassed(redirectInfo!)
+            }
         } else {
             print("requesting status...")
             self.executeWithDelay(CHECK_STATUS_DELAY_SEC, self.checkStatus)
