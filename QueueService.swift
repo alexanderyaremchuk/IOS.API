@@ -136,9 +136,7 @@ open class QueueService {
         if qIdDict != nil {
             let qId = qIdDict?["queueId"] as! String
             let ttl = Int(qIdDict?["ttl"] as! CLongLong)
-            //let issueMode = qIdDict?["queueIssueMode"] as! String //TODO: reanable it
-            let issueMode = "SafetyNet"//TODO: remove it
-            queueIdDto = QueueIdDTO(qId, ttl, issueMode)
+            queueIdDto = QueueIdDTO(qId, ttl)
         }
         return queueIdDto
     }

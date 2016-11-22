@@ -97,12 +97,7 @@ open class QueueITEngine {
         let cache = QueueCache.sharedInstatnce
         cache.setQueueId(queueIdInfo.queueId)
         cache.setQueueIdTtl(queueIdInfo.ttl)
-        
-        var queueIssueMode: QueueIssueMode = .queue
-        if queueIdInfo.issueMode == "SafetyNet" {
-            queueIssueMode = .safetyNet
-        }
-        self.onQueueItemAssigned(QueueItemDetails(queueIdInfo.queueId, queueIssueMode, eventDetails))
+        self.onQueueItemAssigned(QueueItemDetails(queueIdInfo.queueId, eventDetails))
     }
     
     func checkStatus() {
