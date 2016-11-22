@@ -58,6 +58,7 @@ open class QueueService {
                 let dictData = self.dataToDict(data)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
+                let widgetsResult2 = self.extractWidgetDetails2(widgetsResult)
                 let nextCallMSec = dictData!.value(forKey: "ttl") as? Int
                 let statusDto = StatusDTO(redirectDto, widgetsResult, nextCallMSec!)
                 onGetStatus(statusDto)
@@ -174,5 +175,34 @@ open class QueueService {
             widgetsResutl.append(widgetText)
         }
         return widgetsResutl
+    }
+    
+    func extractWidgetDetails2(_ widgets: [String]) -> [String:String] {
+        let widgetsResutl = [String:String]()
+        for w in widgets {
+            let before = getSubstringAfter(fullText: w, text: "type=")
+            let after = w.substring(from: before.endIndex)
+            
+            print(after)
+        }
+        
+        return widgetsResutl
+    }
+    
+    func getSubstringAfter(fullText: String, text: String) -> String {
+        var index = text.characters.count
+        var cand = fullText.substring(to: text.endIndex)
+        var result = cand
+        let full = fullText.substring(from: text.endIndex)
+        for c in full.characters {
+            if cand == text {
+                return result
+            }
+            cand = cand + String(c)
+            result = result + String(c)
+            cand = cand.substring(from: " ".endIndex)
+            index += 1
+        }
+        return result
     }
 }
