@@ -56,11 +56,11 @@ open class QueueService {
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
-                let eventDetails = self.extractEventDetails(dictData!)
+                //let eventDetails = self.extractEventDetails(dictData!)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
-                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult)
-                onGetStatus(statusDto)
+                //let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult)
+                //onGetStatus(statusDto)
             })
             { (error, errorStatusCode) -> Void in
                 
@@ -156,12 +156,8 @@ open class QueueService {
             let ttl = Int(redirectDetailsDict?["ttl"] as! CLongLong)
             let extendTtl = redirectDetailsDict?["extendTtl"] as! Bool
             let redirectId = redirectDetailsDict?["redirectId"] as! String
-            do {
-                let passedType = try self.parseRedirectType(redirectType)
-                redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
-            } catch {
-                print("Unknown redirectType: \(redirectType)")
-            }
+            let passedType = try! self.parseRedirectType(redirectType)
+            redirectDto = RedirectDTO(passedType, ttl, extendTtl, redirectId)
         }
         return redirectDto
     }
