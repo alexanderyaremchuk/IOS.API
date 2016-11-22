@@ -180,17 +180,19 @@ open class QueueService {
     func extractWidgetDetails2(_ widgets: [String]) -> [String:String] {
         let widgetsResutl = [String:String]()
         for w in widgets {
-            let before = getSubstringAfter(fullText: w, text: "type=")
-            let after = w.substring(from: before.endIndex)
+            let beforeId = getSubstringAfter(fullText: w, text: "type=")
+            let afterId = w.substring(from: beforeId.endIndex)
+            let id = getSubstringBeforeChar(fullText: afterId, char: ";")
             
-            print(after)
+            let beforeChecksum = getSubstringAfter(fullText: w, text: "checksum=")
+            let afterChecksum = w.substring(from: beforeChecksum.endIndex)
+            let checksum = getSubstringBeforeChar(fullText: afterChecksum, char: ";")
         }
         
         return widgetsResutl
     }
     
     func getSubstringAfter(fullText: String, text: String) -> String {
-        var index = text.characters.count
         var cand = fullText.substring(to: text.endIndex)
         var result = cand
         let full = fullText.substring(from: text.endIndex)
@@ -201,7 +203,18 @@ open class QueueService {
             cand = cand + String(c)
             result = result + String(c)
             cand = cand.substring(from: " ".endIndex)
-            index += 1
+        }
+        return result
+    }
+    
+    func getSubstringBeforeChar(fullText: String, char: Character) -> String {
+        var result = ""
+        for c in fullText.characters {
+            if c == char {
+                return result
+            } else {
+                result = result + String(c)
+            }
         }
         return result
     }
