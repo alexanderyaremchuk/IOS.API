@@ -58,7 +58,8 @@ open class QueueService {
                 let dictData = self.dataToDict(data)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
-                let statusDto = StatusDTO(redirectDto, widgetsResult)
+                let nextCallMSec = dictData!.value(forKey: "ttl") as? Int
+                let statusDto = StatusDTO(redirectDto, widgetsResult, nextCallMSec!)
                 onGetStatus(statusDto)
             })
             { (error, errorStatusCode) -> Void in

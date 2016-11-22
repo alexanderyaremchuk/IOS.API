@@ -5,7 +5,6 @@ enum QueueItServerFailure : Error {
 }
 
 open class QueueITEngine {
-    let CHECK_STATUS_DELAY_SEC = 1
     let MAX_RETRY_SEC = 10
     let INITIAL_WAIT_RETRY_SEC = 1
     
@@ -115,7 +114,8 @@ open class QueueITEngine {
             }
         } else {
             print("requesting status...")
-            self.executeWithDelay(CHECK_STATUS_DELAY_SEC, self.checkStatus)
+            let delaySec = statusDto.nextCallMSec / 1000
+            self.executeWithDelay(delaySec, self.checkStatus)
         }
     }
     
