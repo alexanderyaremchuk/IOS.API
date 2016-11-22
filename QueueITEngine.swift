@@ -89,18 +89,7 @@ open class QueueITEngine {
                 }
             },
             failure: { (error, errorStatusCode) -> Void in
-                if (errorStatusCode >= 400 && errorStatusCode < 500)
-                {
-                    if error!.message == "A server with the specified hostname could not be found." {
-                        throw QueueItServerFailure.invalidHostName(QueueService.sharedInstance.getHostName())
-                    } else if error!.id == "EventNotFound" {
-                        throw QueueItServerFailure.invalidEventId(error!.message)
-                    }
-                    
-                } else if errorStatusCode >= 500 {
-                    print("retrying, delta: \(self.deltaSec)")
-                    try! self.retryMonitor(self.enqueue)
-                }
+                try! self.onEnqueueFailed(error!, errorStatusCode)
             })
     }
     
@@ -161,6 +150,21 @@ open class QueueITEngine {
             self.deltaSec = self.deltaSec * 2;
         } else {
             throw QueueItServerFailure.serviceUnavailable
+        }
+    }
+    
+    func onEnqueueFailed(_ error: ErrorInfo, _ errorStatusCode: Int) throws {
+        if (errorStatusCode >= 400 && errorStatusCode < 500)
+        {
+            if error.message == "A server with the specified hostname could not be found." {
+                throw QueueItServerFailure.invalidHostName(QueueService.sharedInstance.getHostName())
+            } else if error.id == "EventNotFound" {
+                throw QueueItServerFailure.invalidEventId(error.message)
+            }
+            
+        } else if errorStatusCode >= 500 {
+            print("retrying, delta: \(self.deltaSec)")
+            try! self.retryMonitor(self.enqueue)
         }
     }
 }
