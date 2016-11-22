@@ -109,7 +109,7 @@ open class QueueITEngine {
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
             self.handleQueuePassed(redirectInfo!)
-        } else if statusDto.eventDetails?.state == .postqueue {
+        } else if statusDto.redirectDto?.passedType == .afterEvent {
             self.onPostQueue()
         } else {
             print("requesting status...")

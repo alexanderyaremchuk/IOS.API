@@ -56,11 +56,10 @@ open class QueueService {
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
-                //let eventDetails = self.extractEventDetails(dictData!)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
-                //let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult)
-                //onGetStatus(statusDto)
+                let statusDto = StatusDTO(redirectDto, widgetsResult)
+                onGetStatus(statusDto)
             })
             { (error, errorStatusCode) -> Void in
                 
