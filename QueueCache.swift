@@ -8,11 +8,23 @@ open class QueueCache {
     fileprivate let KEY_REDIRECT_ID = "redirectId"
     fileprivate let KEY_SESSION_TTL = "sessionTtl"
     fileprivate let KEY_SESSION_TTL_DELTA = "sessionTtlDelta"
+    fileprivate let KEY_WIDGETS = "widgets"
     
     static let sharedInstatnce  = QueueCache()
     
     func initialize(_ customerId: String, _ eventId: String) {
         KEY_CACHE = "\(customerId)-\(eventId)"
+    }
+    
+    open func getWidgets() -> [String:String]? {
+        let cache: [String : Any] = ensureCache()
+        let widgets: [String:String]? = (cache[KEY_WIDGETS] as? [String:String]?)!
+        return widgets
+    }
+    
+    open func widgetExist(_ name: String) -> Bool {
+        let widgets = getWidgets()
+        return widgets?[name] != nil
     }
     
     open func getQueueId() -> String? {
@@ -69,6 +81,15 @@ open class QueueCache {
     
     open func setSessionTtl(_ sessionTtl: Int64) {
         update(key: KEY_SESSION_TTL, value: sessionTtl)
+    }
+    
+    open func addOrUpdateWidget(_ widget: WidgetDTO) {
+        var widgets = getWidgets()
+        if widgets == nil {
+            widgets = [String:String]()
+        }
+        widgets![widget.name] = widget.checksum
+        update(key: KEY_WIDGETS, value: widgets!)
     }
     
     open func setSessionTtlDelta(_ sessionTtlDelta: Int) {

@@ -105,6 +105,22 @@ open class QueueITEngine {
     }
     
     func onGetStatus(statusDto: StatusDTO) {
+        let cache = QueueCache.sharedInstatnce
+        let widgets = statusDto.widgets
+        if (widgets?.count)! > 0 {
+            for widget in widgets! {
+                if cache.widgetExist(widget.name) {
+                    let checksumFromCache = cache.getWidgets()?[widget.name]
+                    if checksumFromCache != widget.checksum {
+                        cache.addOrUpdateWidget(widget)
+                        //publish widget changed
+                    }
+                } else {
+                    cache.addOrUpdateWidget(widget)
+                }
+            }
+        }
+        
         let redirectInfo = statusDto.redirectDto
         if redirectInfo != nil {
             if redirectInfo!.passedType == .afterEvent {
