@@ -49,9 +49,23 @@ open class QueueITEngine {
     func run() {
         if isInSession(tryExtendSession: true) {
             onQueuePassed(QueuePassedDetails(nil))//TODO: should not be nill, figure out what
+        } else if isWithinQueueIdSession() {
+            checkStatus()
         } else {
             enqueue()
         }
+    }
+    
+    func isWithinQueueIdSession() -> Bool {
+        let cache = QueueCache.sharedInstatnce
+        if cache.getQueueIdTtl() != nil {
+            let currentTime = Date()
+            let queueIdTtl = Date(timeIntervalSince1970: Double(cache.getQueueIdTtl()!))
+            if(currentTime < queueIdTtl) {
+                return true
+            }
+        }
+        return false
     }
     
     func isInSession(tryExtendSession: Bool) -> Bool {
@@ -98,7 +112,7 @@ open class QueueITEngine {
     func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDetails) {
         let cache = QueueCache.sharedInstatnce
         cache.setQueueId(queueIdInfo.queueId)
-        cache.setQueueIdTtl(queueIdInfo.ttl)
+        cache.setQueueIdTtl(queueIdInfo.ttl + currentTimeUnixUtil())
         self.onQueueItemAssigned(QueueItemDetails(queueIdInfo.queueId, eventDetails))
     }
     
@@ -140,6 +154,7 @@ open class QueueITEngine {
     
     func handleQueuePassed(_ redirectInfo: RedirectDTO) {
         let cache = QueueCache.sharedInstatnce
+        cache.clear()
         cache.setRedirectId((redirectInfo.redirectId))
         cache.setSessionTtlDelta(redirectInfo.ttl)
         cache.setSessionTtl(redirectInfo.ttl + currentTimeUnixUtil())

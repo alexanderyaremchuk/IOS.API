@@ -33,9 +33,15 @@ open class QueueCache {
         return queueId
     }
     
-    open func getQueueIdTtl() -> Int? {
+    open func hasQueueId() -> Bool {
         let cache: [String : Any] = ensureCache()
-        let queueIdTtl: Int? = cache[KEY_QUEUEID_TTL] as? Int
+        let queueId: String? = cache[KEY_QUEUE_ID] as? String
+        return queueId != nil
+    }
+    
+    open func getQueueIdTtl() -> Int64? {
+        let cache: [String : Any] = ensureCache()
+        let queueIdTtl: Int64? = cache[KEY_QUEUEID_TTL] as? Int64
         return queueIdTtl
     }
     
@@ -75,7 +81,7 @@ open class QueueCache {
         update(key: KEY_REDIRECT_ID, value: redirectId)
     }
     
-    open func setQueueIdTtl(_ queueIdTtl: Int) {
+    open func setQueueIdTtl(_ queueIdTtl: Int64) {
         update(key: KEY_QUEUEID_TTL, value: queueIdTtl)
     }
     
