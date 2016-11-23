@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onQueueItemAssigned: (onQueueItemAssigned),
             onQueuePassed: (onQueuePassed),
             onPostQueue: (onPostQueue),
-            onIdleQueue: (onIdleQueue))
+            onIdleQueue: (onIdleQueue),
+            onWidgetChanged: (onWidgetChanged))
         
         engine.run()
         
@@ -46,6 +47,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Idle queue published...")
     }
     
+    func onWidgetChanged(widget: String) {
+        print("Widget changd!: \(widget)")
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

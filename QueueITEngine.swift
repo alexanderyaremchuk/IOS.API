@@ -21,12 +21,14 @@ open class QueueITEngine {
     var onQueuePassed: (QueuePassedDetails) -> Void
     var onPostQueue: () -> Void
     var onIdleQueue: () -> Void
+    var onWidgetChanged: (String) -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
                 onPostQueue: @escaping () -> Void,
-                onIdleQueue: @escaping () -> Void) {
+                onIdleQueue: @escaping () -> Void,
+                onWidgetChanged: @escaping(String) -> Void) {
         self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
         self.customerId = customerId
         self.eventId = eventId
@@ -37,6 +39,7 @@ open class QueueITEngine {
         self.onQueuePassed = onQueuePassed
         self.onPostQueue = onPostQueue
         self.onIdleQueue = onIdleQueue
+        self.onWidgetChanged = onWidgetChanged
         for w in widgets {
             self.widgets.append(w)
         }
@@ -113,7 +116,7 @@ open class QueueITEngine {
                     let checksumFromCache = cache.getWidgets()?[widget.name]
                     if checksumFromCache != widget.checksum {
                         cache.addOrUpdateWidget(widget)
-                        //publish widget changed
+                        self.onWidgetChanged(widget.value)
                     }
                 } else {
                     cache.addOrUpdateWidget(widget)
