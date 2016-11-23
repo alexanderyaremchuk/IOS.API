@@ -179,25 +179,26 @@ open class QueueService {
     
     func extractWidgetDetails2(_ widgets: [String]) -> [String:String] {
         let widgetsResutl = [String:String]()
-        for w in widgets {
-            let beforeId = getSubstringAfter(fullText: w, text: "type=")
-            let afterId = w.substring(from: beforeId.endIndex)
-            let id = getSubstringBeforeChar(fullText: afterId, char: ";")
-            
-            let beforeChecksum = getSubstringAfter(fullText: w, text: "checksum=")
-            let afterChecksum = w.substring(from: beforeChecksum.endIndex)
-            let checksum = getSubstringBeforeChar(fullText: afterChecksum, char: ";")
+        for widgetText in widgets {
+            let name = getValueForKeyFromText("type=", widgetText)
+            let checksum = getValueForKeyFromText("checksum=", widgetText)
         }
-        
         return widgetsResutl
     }
     
-    func getSubstringAfter(fullText: String, text: String) -> String {
-        var cand = fullText.substring(to: text.endIndex)
+    func getValueForKeyFromText(_ key: String, _ text: String) -> String {
+        let before = getSubstringAfter(text, key)
+        let after = text.substring(from: before.endIndex)
+        let value = getSubstringBeforeChar(after, ";")
+        return value
+    }
+    
+    func getSubstringAfter(_ text: String, _ part: String) -> String {
+        var cand = text.substring(to: part.endIndex)
         var result = cand
-        let full = fullText.substring(from: text.endIndex)
+        let full = text.substring(from: part.endIndex)
         for c in full.characters {
-            if cand == text {
+            if cand == part {
                 return result
             }
             cand = cand + String(c)
@@ -207,9 +208,9 @@ open class QueueService {
         return result
     }
     
-    func getSubstringBeforeChar(fullText: String, char: Character) -> String {
+    func getSubstringBeforeChar(_ text: String, _ char: Character) -> String {
         var result = ""
-        for c in fullText.characters {
+        for c in text.characters {
             if c == char {
                 return result
             } else {
