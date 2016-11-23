@@ -58,7 +58,6 @@ open class QueueService {
                 let dictData = self.dataToDict(data)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
-                let widgetsResult2 = self.extractWidgetDetails2(widgetsResult)
                 let nextCallMSec = dictData!.value(forKey: "ttl") as? Int
                 let statusDto = StatusDTO(redirectDto, widgetsResult, nextCallMSec!)
                 onGetStatus(statusDto)
@@ -163,8 +162,8 @@ open class QueueService {
         return redirectDto
     }
     
-    func extractWidgetDetails(_ dataDict: NSDictionary) -> [String] {
-        var widgetsResutl = [String]()
+    func extractWidgetDetails(_ dataDict: NSDictionary) -> [WidgetDTO]? {
+        var widgetsResutl = [WidgetDTO]()
         let widgetArr = dataDict.value(forKey: "widgets") as? NSArray
         for w in widgetArr! {
             var widgetText = String(describing: w)
@@ -172,16 +171,11 @@ open class QueueService {
             widgetText = widgetText.replacingOccurrences(of: " ", with: "")
             widgetText = widgetText.replacingOccurrences(of: "{", with: "")
             widgetText = widgetText.replacingOccurrences(of: "}", with: "")
-            widgetsResutl.append(widgetText)
-        }
-        return widgetsResutl
-    }
-    
-    func extractWidgetDetails2(_ widgets: [String]) -> [String:String] {
-        let widgetsResutl = [String:String]()
-        for widgetText in widgets {
+            
             let name = getValueForKeyFromText("type=", widgetText)
             let checksum = getValueForKeyFromText("checksum=", widgetText)
+            let widgetDto = WidgetDTO(name, checksum, widgetText)
+            widgetsResutl.append(widgetDto)
         }
         return widgetsResutl
     }
