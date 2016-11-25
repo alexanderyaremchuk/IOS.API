@@ -22,13 +22,15 @@ open class QueueITEngine {
     var onPostQueue: () -> Void
     var onIdleQueue: () -> Void
     var onWidgetChanged: (String) -> Void
+    var onQueueIdRejected: (String) -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
                 onPostQueue: @escaping () -> Void,
                 onIdleQueue: @escaping () -> Void,
-                onWidgetChanged: @escaping(String) -> Void) {
+                onWidgetChanged: @escaping(String) -> Void,
+                onQueueIdRejected: @escaping(String) -> Void) {
         self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
         self.customerId = customerId
         self.eventId = eventId
@@ -40,6 +42,7 @@ open class QueueITEngine {
         self.onPostQueue = onPostQueue
         self.onIdleQueue = onIdleQueue
         self.onWidgetChanged = onWidgetChanged
+        self.onQueueIdRejected = onQueueIdRejected
         for w in widgets {
             self.widgets.append(w)
         }
@@ -125,7 +128,10 @@ open class QueueITEngine {
         if statusDto.widgets != nil {
             self.handleWidgets(statusDto.widgets!)
         }
-        if statusDto.redirectDto != nil {
+        if statusDto.rejectDto != nil {
+            self.handleQueueIdRejected((statusDto.rejectDto?.reason)!)
+        }
+        else if statusDto.redirectDto != nil {
             self.handleQueuePassed(statusDto.redirectDto!)
         }
         else if statusDto.eventDetails?.state == .postqueue {
@@ -151,6 +157,11 @@ open class QueueITEngine {
                 cache.addOrUpdateWidget(widget)
             }
         }
+    }
+    
+    func handleQueueIdRejected(_ reason: String) {
+        self.onQueueIdRejected(reason)
+        QueueCache.sharedInstatnce.clear()
     }
     
     func handleQueuePassed(_ redirectInfo: RedirectDTO) {

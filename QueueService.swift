@@ -59,8 +59,9 @@ open class QueueService {
                 let eventDetails = self.extractEventDetails(dictData!)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
+                let rejectDto = self.extractRejectDetails(dictData!)
                 let nextCallMSec = dictData!.value(forKey: "ttl") as? Int
-                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult, nextCallMSec!)
+                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult, nextCallMSec!, rejectDto)
                 onGetStatus(statusDto)
             })
             { (error, errorStatusCode) -> Void in
@@ -151,6 +152,16 @@ open class QueueService {
             eventDetails = EventDTO(state)
         }
         return eventDetails
+    }
+    
+    func extractRejectDetails(_ dataDict: NSDictionary) -> RejectDTO? {
+        var rejectDetails: RejectDTO? = nil
+        let rejectDetailsDict = dataDict.value(forKey: "rejectDetails") as? NSDictionary
+        if rejectDetailsDict != nil {
+            let reason = rejectDetailsDict?["reason"] as! String
+            rejectDetails = RejectDTO(reason)
+        }
+        return rejectDetails
     }
     
     func extractRedirectDetails(_ dataDict: NSDictionary) -> RedirectDTO? {

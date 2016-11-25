@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D2549F51DE869E800E240BA /* RejectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2549F41DE869E800E240BA /* RejectDTO.swift */; };
 		1D5A528E1DE58CC000BA3D42 /* WidgetDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */; };
 		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
 		1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D2549F41DE869E800E240BA /* RejectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectDTO.swift; sourceTree = "<group>"; };
 		1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetDTO.swift; sourceTree = "<group>"; };
 		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
 		1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectDTO.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */,
 				1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */,
 				1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */,
+				1D2549F41DE869E800E240BA /* RejectDTO.swift */,
 			);
 			name = DTO;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				1D78009C1DD4651F00B2C801 /* QueuePassedDetails.swift in Sources */,
 				1D5A528E1DE58CC000BA3D42 /* WidgetDTO.swift in Sources */,
 				1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */,
+				1D2549F51DE869E800E240BA /* RejectDTO.swift in Sources */,
 				1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */,
 				1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */,
 				1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */,
