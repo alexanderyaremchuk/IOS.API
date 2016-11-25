@@ -122,25 +122,11 @@ open class QueueITEngine {
     }
     
     func onGetStatus(statusDto: StatusDTO) {
-        let cache = QueueCache.sharedInstatnce
-        let widgets = statusDto.widgets
-        if (widgets?.count)! > 0 {
-            for widget in widgets! {
-                if cache.widgetExist(widget.name) {
-                    let checksumFromCache = cache.getWidgets()?[widget.name]
-                    if checksumFromCache != widget.checksum {
-                        cache.addOrUpdateWidget(widget)
-                        self.onWidgetChanged(widget.value)
-                    }
-                } else {
-                    cache.addOrUpdateWidget(widget)
-                }
-            }
+        if statusDto.widgets != nil {
+            self.handleWidgets(statusDto.widgets!)
         }
-        
-        let redirectInfo = statusDto.redirectDto
-        if redirectInfo != nil {
-            self.handleQueuePassed(redirectInfo!)
+        if statusDto.redirectDto != nil {
+            self.handleQueuePassed(statusDto.redirectDto!)
         }
         else if statusDto.eventDetails?.state == .postqueue {
             self.onPostQueue()
@@ -149,6 +135,21 @@ open class QueueITEngine {
             print("requesting status...")
             let delaySec = statusDto.nextCallMSec / 1000
             self.executeWithDelay(delaySec, self.checkStatus)
+        }
+    }
+    
+    func handleWidgets(_ widgets: [WidgetDTO]) {
+        let cache = QueueCache.sharedInstatnce
+        for widget in widgets {
+            if cache.widgetExist(widget.name) {
+                let checksumFromCache = cache.getWidgets()?[widget.name]
+                if checksumFromCache != widget.checksum {
+                    cache.addOrUpdateWidget(widget)
+                    self.onWidgetChanged(widget.value)
+                }
+            } else {
+                cache.addOrUpdateWidget(widget)
+            }
         }
     }
     
