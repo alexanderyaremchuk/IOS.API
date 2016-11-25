@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D2549F51DE869E800E240BA /* RejectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2549F41DE869E800E240BA /* RejectDTO.swift */; };
+		1D2549F71DE8888100E240BA /* iOSUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2549F61DE8888100E240BA /* iOSUtils.swift */; };
 		1D5A528E1DE58CC000BA3D42 /* WidgetDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */; };
 		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
 		1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		1D2549F41DE869E800E240BA /* RejectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RejectDTO.swift; sourceTree = "<group>"; };
+		1D2549F61DE8888100E240BA /* iOSUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iOSUtils.swift; sourceTree = "<group>"; };
 		1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetDTO.swift; sourceTree = "<group>"; };
 		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
 		1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectDTO.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */,
 				1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */,
 				1DC9C76F1DCB42130053681B /* QueueCache.swift */,
+				1D2549F61DE8888100E240BA /* iOSUtils.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DA8457A1DE2F34D0087ECF6 /* ErrorInfo.swift in Sources */,
+				1D2549F71DE8888100E240BA /* iOSUtils.swift in Sources */,
 				1D78009E1DD4750C00B2C801 /* QueueItemDetails.swift in Sources */,
 				1D84B81B1DD0C401008AE794 /* Widget.swift in Sources */,
 				1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */,
