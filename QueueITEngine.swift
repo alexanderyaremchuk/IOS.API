@@ -167,10 +167,10 @@ open class QueueITEngine {
     func handleQueuePassed(_ redirectInfo: RedirectDTO) {
         let cache = QueueCache.sharedInstatnce
         cache.clear()
-        cache.setRedirectId((redirectInfo.redirectId))
+        cache.setRedirectId(redirectInfo.redirectId)
         cache.setSessionTtlDelta(redirectInfo.ttl)
         cache.setSessionTtl(redirectInfo.ttl + currentTimeUnixUtil())
-        cache.setExtendSession((redirectInfo.extendTtl))
+        cache.setExtendSession(redirectInfo.extendTtl)
         
         self.onQueuePassed(QueuePassedDetails(redirectInfo.passedType))
     }
