@@ -89,6 +89,7 @@
 		1D2549F21DE8517D00E240BA /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				1DA845791DE2F34D0087ECF6 /* ErrorInfo.swift */,
 				1D84B8181DD09202008AE794 /* EventDTO.swift */,
 				1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */,
 				1D84B8161DD08342008AE794 /* EnqueueDTO.swift */,
@@ -97,6 +98,16 @@
 				1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */,
 			);
 			name = DTO;
+			sourceTree = "<group>";
+		};
+		1D2549F31DE865DB00E240BA /* ExternalDTO */ = {
+			isa = PBXGroup;
+			children = (
+				1D78009D1DD4750C00B2C801 /* QueueItemDetails.swift */,
+				1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */,
+				1D84B81A1DD0C401008AE794 /* Widget.swift */,
+			);
+			name = ExternalDTO;
 			sourceTree = "<group>";
 		};
 		1DCA71B01DC88F3800C6FA5D = {
@@ -159,16 +170,13 @@
 		1DCA71DE1DC8998900C6FA5D /* API */ = {
 			isa = PBXGroup;
 			children = (
+				1D2549F31DE865DB00E240BA /* ExternalDTO */,
 				1D2549F21DE8517D00E240BA /* DTO */,
 				1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */,
 				1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */,
 				1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */,
 				1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */,
 				1DC9C76F1DCB42130053681B /* QueueCache.swift */,
-				1D84B81A1DD0C401008AE794 /* Widget.swift */,
-				1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */,
-				1D78009D1DD4750C00B2C801 /* QueueItemDetails.swift */,
-				1DA845791DE2F34D0087ECF6 /* ErrorInfo.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
