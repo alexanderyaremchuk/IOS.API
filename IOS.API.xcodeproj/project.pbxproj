@@ -26,7 +26,6 @@
 		1DCA71D51DC88F3800C6FA5D /* IOS_APITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71D41DC88F3800C6FA5D /* IOS_APITests.swift */; };
 		1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */; };
 		1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */; };
-		1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */; };
 		1DD6A7941DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,7 +63,6 @@
 		1DCA71D41DC88F3800C6FA5D /* IOS_APITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOS_APITests.swift; sourceTree = "<group>"; };
 		1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueITEngine.swift; sourceTree = "<group>"; };
 		1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueService.swift; sourceTree = "<group>"; };
-		1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueStatus.swift; sourceTree = "<group>"; };
 		1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueService_NSURLConnectionRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,7 +172,6 @@
 				1D2549F21DE8517D00E240BA /* DTO */,
 				1DCA71E71DC8DBE800C6FA5D /* QueueITEngine.swift */,
 				1DCA71EB1DC8E0C200C6FA5D /* QueueService.swift */,
-				1DCA71ED1DC8EA0200C6FA5D /* QueueStatus.swift */,
 				1DD6A7931DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift */,
 				1DC9C76F1DCB42130053681B /* QueueCache.swift */,
 			);
@@ -296,7 +293,6 @@
 				1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */,
 				1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */,
 				1DCA71E81DC8DBE800C6FA5D /* QueueITEngine.swift in Sources */,
-				1DCA71EE1DC8EA0200C6FA5D /* QueueStatus.swift in Sources */,
 				1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */,
 				1DCA71EC1DC8E0C200C6FA5D /* QueueService.swift in Sources */,
 				1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */,
