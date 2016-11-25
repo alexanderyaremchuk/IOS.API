@@ -142,9 +142,9 @@ open class QueueITEngine {
         if redirectInfo != nil {
             self.handleQueuePassed(redirectInfo!)
         }
-        //else if postqueue situation { //TODO:
-            //self.onPostQueue()
-        //}
+        else if statusDto.eventDetails?.state == .postqueue {
+            self.onPostQueue()
+        }
         else {
             print("requesting status...")
             let delaySec = statusDto.nextCallMSec / 1000

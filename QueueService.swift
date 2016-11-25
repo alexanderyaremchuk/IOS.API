@@ -34,7 +34,7 @@ open class QueueService {
                 let queueIdDto = self.extractQueueIdDetails(dictData!)
                 let eventDetails = self.extractEventDetails(dictData!)
                 let redirectDto = self.extractRedirectDetails(dictData!)
-                success(EnqueueDTO(queueIdDto, eventDetails, redirectDto))
+                success(EnqueueDTO(queueIdDto, eventDetails!, redirectDto))
         })
         { (error, errorStatusCode) -> Void in
             failure(error, errorStatusCode)
@@ -56,10 +56,11 @@ open class QueueService {
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 let dictData = self.dataToDict(data)
+                let eventDetails = self.extractEventDetails(dictData!)
                 let redirectDto = self.extractRedirectDetails(dictData!)
                 let widgetsResult = self.extractWidgetDetails(dictData!)
                 let nextCallMSec = dictData!.value(forKey: "ttl") as? Int
-                let statusDto = StatusDTO(redirectDto, widgetsResult, nextCallMSec!)
+                let statusDto = StatusDTO(eventDetails, redirectDto, widgetsResult, nextCallMSec!)
                 onGetStatus(statusDto)
             })
             { (error, errorStatusCode) -> Void in
@@ -141,11 +142,15 @@ open class QueueService {
         return queueIdDto
     }
     
-    func extractEventDetails(_ dataDict: NSDictionary) -> EventDetails {
+    func extractEventDetails(_ dataDict: NSDictionary) -> EventDetails? {
+        var eventDetails: EventDetails? = nil
         let eventDetailsDict = dataDict.value(forKey: "eventDetails") as? NSDictionary
-        let stateString = eventDetailsDict?["state"] as! String
-        let state: EventState = try! self.parseEventState(stateString)
-        return EventDetails(state)
+        if eventDetailsDict != nil {
+            let stateString = eventDetailsDict?["state"] as! String
+            let state: EventState = try! self.parseEventState(stateString)
+            eventDetails = EventDetails(state)
+        }
+        return eventDetails
     }
     
     func extractRedirectDetails(_ dataDict: NSDictionary) -> RedirectDTO? {
