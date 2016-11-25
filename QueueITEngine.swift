@@ -109,7 +109,7 @@ open class QueueITEngine {
             })
     }
     
-    func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDetails) {
+    func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDTO) {
         let cache = QueueCache.sharedInstatnce
         cache.setQueueId(queueIdInfo.queueId)
         cache.setQueueIdTtl(queueIdInfo.ttl + currentTimeUnixUtil())

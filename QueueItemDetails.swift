@@ -2,9 +2,9 @@ import Foundation
 
 class QueueItemDetails {
     var queueId: String
-    var eventDetails: EventDetails
+    var eventDetails: EventDTO
     
-    init(_ queueId: String, _ eventDetails: EventDetails) {
+    init(_ queueId: String, _ eventDetails: EventDTO) {
         self.queueId = queueId
         self.eventDetails = eventDetails
     }

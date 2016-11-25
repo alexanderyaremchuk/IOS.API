@@ -142,13 +142,13 @@ open class QueueService {
         return queueIdDto
     }
     
-    func extractEventDetails(_ dataDict: NSDictionary) -> EventDetails? {
-        var eventDetails: EventDetails? = nil
+    func extractEventDetails(_ dataDict: NSDictionary) -> EventDTO? {
+        var eventDetails: EventDTO? = nil
         let eventDetailsDict = dataDict.value(forKey: "eventDetails") as? NSDictionary
         if eventDetailsDict != nil {
             let stateString = eventDetailsDict?["state"] as! String
             let state: EventState = try! self.parseEventState(stateString)
-            eventDetails = EventDetails(state)
+            eventDetails = EventDTO(state)
         }
         return eventDetails
     }
