@@ -188,10 +188,14 @@ open class QueueService {
             widgetText = widgetText.replacingOccurrences(of: "{", with: "")
             widgetText = widgetText.replacingOccurrences(of: "}", with: "")
             
-            let kvPairs = getAllKeyValues(widgetText)
-            
+            var kvPairs = getAllKeyValues(widgetText)
             let name = kvPairs["type"]
             let checksum = kvPairs["checksum"]
+            
+            kvPairs.removeValue(forKey: "type")
+            kvPairs.removeValue(forKey: "version")
+            kvPairs.removeValue(forKey: "checksum")
+            
             let widgetDto = WidgetDTO(name!, checksum!, widgetText)
             widgetsResutl.append(widgetDto)
         }
