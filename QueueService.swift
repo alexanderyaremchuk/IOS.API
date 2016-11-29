@@ -188,45 +188,31 @@ open class QueueService {
             widgetText = widgetText.replacingOccurrences(of: "{", with: "")
             widgetText = widgetText.replacingOccurrences(of: "}", with: "")
             
-            let name = getValueForKeyFromText("type=", widgetText)
-            let checksum = getValueForKeyFromText("checksum=", widgetText)
-            let widgetDto = WidgetDTO(name, checksum, widgetText)
+            let kvPairs = getAllKeyValues(widgetText)
+            
+            let name = kvPairs["type"]
+            let checksum = kvPairs["checksum"]
+            let widgetDto = WidgetDTO(name!, checksum!, widgetText)
             widgetsResutl.append(widgetDto)
         }
         return widgetsResutl
     }
     
-    func getValueForKeyFromText(_ key: String, _ text: String) -> String {
-        let before = getSubstringAfter(text, key)
-        let after = text.substring(from: before.endIndex)
-        let value = getSubstringBeforeChar(after, ";")
-        return value
-    }
-    
-    func getSubstringAfter(_ text: String, _ part: String) -> String {
-        var cand = text.substring(to: part.endIndex)
-        var result = cand
-        let full = text.substring(from: part.endIndex)
-        for c in full.characters {
-            if cand == part {
-                return result
-            }
-            cand = cand + String(c)
-            result = result + String(c)
-            cand = cand.substring(from: " ".endIndex)
-        }
-        return result
-    }
-    
-    func getSubstringBeforeChar(_ text: String, _ char: Character) -> String {
-        var result = ""
+    func getAllKeyValues(_ text: String) -> [String:String] {
+        var kvPairs = [String:String]()
+        var key = ""; var cand = ""
         for c in text.characters {
-            if c == char {
-                return result
-            } else {
-                result = result + String(c)
+            if c == "=" {
+                key = cand
+                cand = ""
+            } else if c == ";" {
+                kvPairs[key] = cand
+                cand = ""
+            }
+            else {
+                cand = cand + String(c)
             }
         }
-        return result
+        return kvPairs
     }
 }
