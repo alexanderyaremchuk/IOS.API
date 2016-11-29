@@ -3,11 +3,11 @@ import Foundation
 open class WidgetDTO {
     var name: String
     var checksum: String
-    var value: String
+    var data: [String:String]
     
-    init(_ name: String, _ checksum: String, _ value: String) {
+    init(_ name: String, _ checksum: String, _ data: [String:String]) {
         self.name = name
         self.checksum = checksum
-        self.value = value
+        self.data = data
     }
 }

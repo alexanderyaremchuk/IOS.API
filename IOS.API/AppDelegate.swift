@@ -48,8 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Idle queue published...")
     }
     
-    func onWidgetChanged(widget: String) {
-        print("Widget changd!: \(widget)")
+    func onWidgetChanged(widget: WidgetDTO) {
+        print("Widget changd!: \(widget.name)")
     }
     
     func onQueueIdRejected(reason: String) {

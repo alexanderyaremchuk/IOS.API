@@ -21,7 +21,7 @@ open class QueueITEngine {
     var onQueuePassed: (QueuePassedDetails) -> Void
     var onPostQueue: () -> Void
     var onIdleQueue: () -> Void
-    var onWidgetChanged: (String) -> Void
+    var onWidgetChanged: (WidgetDTO) -> Void
     var onQueueIdRejected: (String) -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
@@ -29,7 +29,7 @@ open class QueueITEngine {
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
                 onPostQueue: @escaping () -> Void,
                 onIdleQueue: @escaping () -> Void,
-                onWidgetChanged: @escaping(String) -> Void,
+                onWidgetChanged: @escaping(WidgetDTO) -> Void,
                 onQueueIdRejected: @escaping(String) -> Void) {
         self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
         self.customerId = customerId
@@ -151,7 +151,7 @@ open class QueueITEngine {
                 let checksumFromCache = cache.getWidgets()?[widget.name]
                 if checksumFromCache != widget.checksum {
                     cache.addOrUpdateWidget(widget)
-                    self.onWidgetChanged(widget.value)
+                    self.onWidgetChanged(widget)
                 }
             } else {
                 cache.addOrUpdateWidget(widget)

@@ -196,7 +196,7 @@ open class QueueService {
             kvPairs.removeValue(forKey: "version")
             kvPairs.removeValue(forKey: "checksum")
             
-            let widgetDto = WidgetDTO(name!, checksum!, widgetText)
+            let widgetDto = WidgetDTO(name!, checksum!, kvPairs)
             widgetsResutl.append(widgetDto)
         }
         return widgetsResutl
