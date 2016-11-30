@@ -14,10 +14,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let eventId = "itl5"
         let configId = "configId1"
         let widget1 = Widget("CountDown", 1)
+        let widget2 = Widget("Progress", 1)
         let engine = QueueITEngine(customerId: customerId,
             eventId: eventId,
             configId: configId,
-            widgets: widget1,
+            widgets: widget1, widget2,
             layoutName: "",
             language: "",
             onQueueItemAssigned: (onQueueItemAssigned),

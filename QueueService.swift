@@ -211,6 +211,7 @@ open class QueueService {
                 cand = ""
             } else if c == ";" {
                 kvPairs[key] = cand
+                print(cand)
                 cand = ""
             }
             else {
