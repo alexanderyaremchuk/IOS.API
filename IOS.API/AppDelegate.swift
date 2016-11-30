@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customerId = "sasha"
         //let eventId = "integrationtest2"
-        let eventId = "itl5"
+        let eventId = "itl6"
         let configId = "configId1"
         let widget1 = Widget("CountDown", 1)
         let widget2 = Widget("Progress", 1)
