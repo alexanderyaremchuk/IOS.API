@@ -11,7 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let customerId = "sasha"
         //let eventId = "integrationtest2"
-        let eventId = "itl3"
+        let eventId = "itl5"
         let configId = "configId1"
         let widget1 = Widget("CountDown", 1)
         let engine = QueueITEngine(customerId: customerId,

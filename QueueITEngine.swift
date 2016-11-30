@@ -97,7 +97,7 @@ open class QueueITEngine {
                     self.handleQueuePassed(redirectInfo!)
                 } else {
                     let eventState = enqueueDto.eventDetails.state
-                    if eventState == .queue {
+                    if eventState == .queue || eventState == .prequeue {
                         self.handleQueueIdAssigned(enqueueDto.queueIdDto!, enqueueDto.eventDetails)
                         self.checkStatus()
                     } else if eventState == .postqueue {
