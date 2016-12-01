@@ -2,16 +2,11 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        
         let customerId = "sasha"
-        //let eventId = "integrationtest2"
-        let eventId = "itl10"
+        let eventId = "itl5"
         let configId = "configId1"
         let widget1 = WidgetRequest("CountDown", 1)
         let widget2 = WidgetRequest("Progress", 1)
