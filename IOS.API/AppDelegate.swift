@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Idle queue published...")
     }
     
-    func onWidgetChanged(widget: WidgetDTO) {
+    func onWidgetChanged(widget: WidgetDetails) {
         print("Widget changd!: \(widget.name)")
     }
     

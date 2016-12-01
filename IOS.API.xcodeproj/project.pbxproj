@@ -12,6 +12,7 @@
 		1D5A528E1DE58CC000BA3D42 /* WidgetDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */; };
 		1D6618131DD1CB3E0067DE95 /* StatusDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */; };
 		1D6618151DD1DA3B0067DE95 /* RedirectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */; };
+		1D71F3381DF0205D00F85F60 /* WidgetDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D71F3371DF0205D00F85F60 /* WidgetDetails.swift */; };
 		1D78009C1DD4651F00B2C801 /* QueuePassedDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */; };
 		1D78009E1DD4750C00B2C801 /* QueueItemDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D78009D1DD4750C00B2C801 /* QueueItemDetails.swift */; };
 		1D84B8151DD081A4008AE794 /* QueueIdDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */; };
@@ -47,6 +48,7 @@
 		1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetDTO.swift; sourceTree = "<group>"; };
 		1D6618121DD1CB3E0067DE95 /* StatusDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusDTO.swift; sourceTree = "<group>"; };
 		1D6618141DD1DA3B0067DE95 /* RedirectDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedirectDTO.swift; sourceTree = "<group>"; };
+		1D71F3371DF0205D00F85F60 /* WidgetDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetDetails.swift; sourceTree = "<group>"; };
 		1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueuePassedDetails.swift; sourceTree = "<group>"; };
 		1D78009D1DD4750C00B2C801 /* QueueItemDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueItemDetails.swift; sourceTree = "<group>"; };
 		1D84B8141DD081A4008AE794 /* QueueIdDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueIdDTO.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				1D78009D1DD4750C00B2C801 /* QueueItemDetails.swift */,
 				1D78009B1DD4651F00B2C801 /* QueuePassedDetails.swift */,
 				1D84B81A1DD0C401008AE794 /* WidgetRequest.swift */,
+				1D71F3371DF0205D00F85F60 /* WidgetDetails.swift */,
 			);
 			name = ExternalDTO;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				1DD6A7941DCA1250004BF1A2 /* QueueService_NSURLConnectionRequest.swift in Sources */,
 				1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */,
 				1D78009C1DD4651F00B2C801 /* QueuePassedDetails.swift in Sources */,
+				1D71F3381DF0205D00F85F60 /* WidgetDetails.swift in Sources */,
 				1D5A528E1DE58CC000BA3D42 /* WidgetDTO.swift in Sources */,
 				1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */,
 				1D2549F51DE869E800E240BA /* RejectDTO.swift in Sources */,
