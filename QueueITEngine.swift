@@ -13,7 +13,7 @@ open class QueueITEngine {
     open var configId: String
     open var layoutName: String
     open var language: String
-    open var widgets = [Widget]()
+    open var widgets = [WidgetRequest]()
     var deltaSec: Int
     
     
@@ -24,7 +24,7 @@ open class QueueITEngine {
     var onWidgetChanged: (WidgetDTO) -> Void
     var onQueueIdRejected: (String) -> Void
     
-    init(customerId: String, eventId: String, configId: String, widgets:Widget ..., layoutName: String, language: String,
+    init(customerId: String, eventId: String, configId: String, widgets:WidgetRequest ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
                 onQueuePassed: @escaping (_ queuePassedDetails: QueuePassedDetails) -> Void,
                 onPostQueue: @escaping () -> Void,

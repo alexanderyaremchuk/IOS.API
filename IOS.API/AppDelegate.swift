@@ -13,8 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //let eventId = "integrationtest2"
         let eventId = "itl10"
         let configId = "configId1"
-        let widget1 = Widget("CountDown", 1)
-        let widget2 = Widget("Progress", 1)
+        let widget1 = WidgetRequest("CountDown", 1)
+        let widget2 = WidgetRequest("Progress", 1)
         let engine = QueueITEngine(customerId: customerId,
             eventId: eventId,
             configId: configId,

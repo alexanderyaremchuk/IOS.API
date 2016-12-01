@@ -41,7 +41,7 @@ open class QueueService {
         }
     }
     
-    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[Widget], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
+    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[WidgetRequest], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
         self.customerId = customerId
         var body: [String : Any] = ["configurationId" : configId]
         var widgetArr = [Any]()
