@@ -16,13 +16,13 @@ open class QueueITEngine {
     open var widgets = [WidgetRequest]()
     var deltaSec: Int
     
-    
     var onQueueItemAssigned: (QueueItemDetails) -> Void
     var onQueuePassed: (QueuePassedDetails) -> Void
     var onPostQueue: () -> Void
     var onIdleQueue: () -> Void
     var onWidgetChanged: (WidgetDetails) -> Void
     var onQueueIdRejected: (String) -> Void
+    var onQueueItError: (String) -> Void
     
     init(customerId: String, eventId: String, configId: String, widgets:WidgetRequest ..., layoutName: String, language: String,
                 onQueueItemAssigned: @escaping (_ queueItemDetails: QueueItemDetails) -> Void,
@@ -30,7 +30,8 @@ open class QueueITEngine {
                 onPostQueue: @escaping () -> Void,
                 onIdleQueue: @escaping () -> Void,
                 onWidgetChanged: @escaping(WidgetDetails) -> Void,
-                onQueueIdRejected: @escaping(String) -> Void) {
+                onQueueIdRejected: @escaping(String) -> Void,
+                onQueueItError: @escaping(String) -> Void) {
         self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
         self.customerId = customerId
         self.eventId = eventId
@@ -43,6 +44,7 @@ open class QueueITEngine {
         self.onIdleQueue = onIdleQueue
         self.onWidgetChanged = onWidgetChanged
         self.onQueueIdRejected = onQueueIdRejected
+        self.onQueueItError = onQueueItError
         for w in widgets {
             self.widgets.append(w)
         }
@@ -108,7 +110,7 @@ open class QueueITEngine {
                 }
             },
             failure: { (error, errorStatusCode) -> Void in
-                try! self.onEnqueueFailed(error!, errorStatusCode)
+                self.onEnqueueFailed(error!, errorStatusCode)
             })
     }
     
@@ -186,28 +188,23 @@ open class QueueITEngine {
         })
     }
     
-    func retryMonitor(_ action: @escaping () -> Void) throws {
+    func retryMonitor(_ action: @escaping () -> Void, _ errorMessage: String) {
         if (self.deltaSec < MAX_RETRY_SEC)
         {
             executeWithDelay(self.deltaSec, action)
             self.deltaSec = self.deltaSec * 2;
         } else {
-            throw QueueItServerFailure.serviceUnavailable
+            self.onQueueItError(errorMessage)
         }
     }
     
-    func onEnqueueFailed(_ error: ErrorInfo, _ errorStatusCode: Int) throws {
+    func onEnqueueFailed(_ error: ErrorInfo, _ errorStatusCode: Int) {
         if (errorStatusCode >= 400 && errorStatusCode < 500)
         {
-            if error.message == "A server with the specified hostname could not be found." {
-                throw QueueItServerFailure.invalidHostName(QueueService.sharedInstance.getHostName())
-            } else if error.id == "EventNotFound" {
-                throw QueueItServerFailure.invalidEventId(error.message)
-            }
-            
+            self.onQueueItError(error.message)
         } else if errorStatusCode >= 500 {
             print("retrying, delta: \(self.deltaSec)")
-            try! self.retryMonitor(self.enqueue)
+            self.retryMonitor(self.enqueue, error.message)
         }
     }
 }

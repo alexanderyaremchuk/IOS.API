@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             onPostQueue: (onPostQueue),
             onIdleQueue: (onIdleQueue),
             onWidgetChanged: (onWidgetChanged),
-            onQueueIdRejected: (onQueueIdRejected))
+            onQueueIdRejected: (onQueueIdRejected),
+            onQueueItError: (onQueueItError))
         
         engine.run()
         
@@ -45,11 +46,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func onWidgetChanged(widget: WidgetDetails) {
-        print("Widget changd!: \(widget.name)")
+        print("Widget changed!: \(widget.name)")
     }
     
     func onQueueIdRejected(reason: String) {
         print("QueueId rejected! Reason: \(reason)")
+    }
+    
+    func onQueueItError(errorMessage: String) {
+        print("ERROR: \(errorMessage)")
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
