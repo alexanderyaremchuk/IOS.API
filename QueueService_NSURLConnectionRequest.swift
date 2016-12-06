@@ -4,7 +4,7 @@ enum UrlRequestFailure : Error {
     case invalidUrl(String)
 }
 
-open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate
+class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelegate, NSURLConnectionDataDelegate
 {
     var request: URLRequest
     var response: URLResponse?
@@ -34,7 +34,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
         case notADictionary, missingErrors
     }
     
-    open func connectionDidFinishLoading(_ conn:NSURLConnection)
+    func connectionDidFinishLoading(_ conn:NSURLConnection)
     {
         if hasExpectedStatusCode() {
             let data = self.data!
@@ -55,7 +55,7 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
         }
     }
     
-    open func connection(_ conn:NSURLConnection, didReceive response:URLResponse)
+    func connection(_ conn:NSURLConnection, didReceive response:URLResponse)
     {
         self.response = response
         let httpResponse = response as! HTTPURLResponse
@@ -63,12 +63,12 @@ open class QueueService_NSURLConnectionRequest : NSObject, NSURLConnectionDelega
         self.actualStatusCode = statusCode
     }
     
-    open func connection(_ conn:NSURLConnection, didReceive data:Data)
+    func connection(_ conn:NSURLConnection, didReceive data:Data)
     {
         appendData(data)
     }
     
-    open func connection(_ conn:NSURLConnection, didFailWithError error:Error)
+    func connection(_ conn:NSURLConnection, didFailWithError error:Error)
     {
         self.failureCallback(ErrorInfo(nil, error.localizedDescription), 400)
     }
