@@ -102,6 +102,7 @@ public class QueueITEngine {
     }
     
     func onEnqueueSuccess(_ enqueueDto: EnqueueDTO) {
+        self.resetDeltaSec()
         let redirectInfo = enqueueDto.redirectDto
         if redirectInfo != nil {
             self.handleQueuePassed(redirectInfo!)
@@ -131,6 +132,7 @@ public class QueueITEngine {
     }
     
     func onGetStatusSuccess(statusDto: StatusDTO) {
+        self.resetDeltaSec()
         if statusDto.widgets != nil {
             self.handleWidgets(statusDto.widgets!)
         }
@@ -150,8 +152,8 @@ public class QueueITEngine {
         }
     }
     
-    func onGetStatusFailed(error: ErrorInfo?) {
-        
+    func onGetStatusFailed(error: ErrorInfo) {
+        self.retryMonitor(self.checkStatus, error.message)
     }
     
     func handleWidgets(_ widgets: [WidgetDTO]) {
@@ -196,12 +198,17 @@ public class QueueITEngine {
         })
     }
     
+    func resetDeltaSec() {
+        self.deltaSec = self.INITIAL_WAIT_RETRY_SEC
+    }
+    
     func retryMonitor(_ action: @escaping () -> Void, _ errorMessage: String) {
         if (self.deltaSec < MAX_RETRY_SEC)
         {
             executeWithDelay(self.deltaSec, action)
             self.deltaSec = self.deltaSec * 2;
         } else {
+            self.resetDeltaSec()
             self.onQueueItError(errorMessage)
         }
     }
