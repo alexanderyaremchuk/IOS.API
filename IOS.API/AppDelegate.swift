@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let customerId = "sasha"
-        let eventId = "lapta2"
+        let eventId = "lapta6"
         let configId = "configId1"
         let widget1 = WidgetRequest("CountDown", 1)
         let widget2 = WidgetRequest("Progress", 1)
@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(queueItemDetails.queueId)
     }
     
-    func onQueuePassed(queuePassedDetails: QueuePassedDetails) {
-        print("REDIRECTED!!! RedirectType: \(queuePassedDetails.passedType)")
+    func onQueuePassed() {
+        print("Redirected!")
     }
     
     func onPostQueue() {
