@@ -41,7 +41,7 @@ class QueueService {
         }
     }
     
-    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[WidgetRequest], onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
+    func getStatus(_ customerId:String, _ eventId:String, _ queueId:String, _ configId:String, _ widgets:[WidgetRequest], onGetStatus:@escaping (_ status: StatusDTO) -> Void, onFailed:@escaping(_ error: ErrorInfo?) -> Void) {
         self.customerId = customerId
         var body: [String : Any] = ["configurationId" : configId]
         var widgetArr = [Any]()
@@ -56,10 +56,10 @@ class QueueService {
         self.submitPUTPath(statusUrl, body: body as NSDictionary,
             success: { (data) -> Void in
                 self.onGetStatusDataSuccess(data, onGetStatus)
-            })
-            { (error, errorStatusCode) -> Void in
-                
-            }
+        })
+        { (error, errorStatusCode) -> Void in
+            onFailed(error)
+        }
     }
     
     func onGetStatusDataSuccess(_ data: Data, _ onGetStatus:@escaping (_ status: StatusDTO) -> Void) {
