@@ -48,7 +48,7 @@ public class QueueITEngine {
         for w in widgets {
             self.widgets.append(w)
         }
-        QueueCache.sharedInstatnce.initialize(customerId, eventId)
+        QueueCache.sharedInstance.initialize(customerId, eventId)
     }
     
     public func run() {
@@ -62,7 +62,7 @@ public class QueueITEngine {
     }
     
     func isWithinQueueIdSession() -> Bool {
-        let cache = QueueCache.sharedInstatnce
+        let cache = QueueCache.sharedInstance
         if cache.getQueueIdTtl() != nil {
             let currentTime = Date()
             let queueIdTtl = Date(timeIntervalSince1970: Double(cache.getQueueIdTtl()!))
@@ -74,7 +74,7 @@ public class QueueITEngine {
     }
     
     func isInSession(tryExtendSession: Bool) -> Bool {
-        let cache = QueueCache.sharedInstatnce
+        let cache = QueueCache.sharedInstance
         if cache.getRedirectId() != nil {
             let currentDate = Date()
             let sessionDate = Date(timeIntervalSince1970: Double(cache.getSessionTtl()!))
@@ -120,14 +120,14 @@ public class QueueITEngine {
     }
     
     func handleQueueIdAssigned(_ queueIdInfo: QueueIdDTO, _ eventDetails: EventDTO) {
-        let cache = QueueCache.sharedInstatnce
+        let cache = QueueCache.sharedInstance
         cache.setQueueId(queueIdInfo.queueId)
         cache.setQueueIdTtl(queueIdInfo.ttl + currentTimeUnixUtil())
         self.onQueueItemAssigned(QueueItemDetails(queueIdInfo.queueId, eventDetails))
     }
     
     func checkStatus() {
-        let queueId = QueueCache.sharedInstatnce.getQueueId()!
+        let queueId = QueueCache.sharedInstance.getQueueId()!
         QueueService.sharedInstance.getStatus(self.customerId, self.eventId, queueId, self.configId, self.widgets, onGetStatus: (onGetStatusSuccess), onFailed: (onGetStatusFailed))
     }
     
@@ -157,7 +157,7 @@ public class QueueITEngine {
     }
     
     func handleWidgets(_ widgets: [WidgetDTO]) {
-        let cache = QueueCache.sharedInstatnce
+        let cache = QueueCache.sharedInstance
         for widget in widgets {
             if cache.widgetExist(widget.name) {
                 let checksumFromCache = cache.getWidgets()?[widget.name]
@@ -173,11 +173,11 @@ public class QueueITEngine {
     
     func handleQueueIdRejected(_ reason: String) {
         self.onQueueIdRejected(reason)
-        QueueCache.sharedInstatnce.clear()
+        QueueCache.sharedInstance.clear()
     }
     
     func handleQueuePassed(_ redirectInfo: RedirectDTO) {
-        let cache = QueueCache.sharedInstatnce
+        let cache = QueueCache.sharedInstance
         cache.clear()
         cache.setRedirectId(redirectInfo.redirectId)
         cache.setSessionTtlDelta(redirectInfo.ttl)
