@@ -190,6 +190,7 @@ public class QueueITEngine {
                 }
             } else {
                 cache.addOrUpdateWidget(widget)
+                self.onWidgetChanged(WidgetDetails(widget.name, widget.data))
             }
         }
     }
