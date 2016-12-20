@@ -6,9 +6,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let customerId = "sasha"
-        let eventId = "lapta6"
+        let eventId = "integrationtest2"
         let configId = "configId1"
-        let widget1 = WidgetRequest("CountDown", 1)
+        let widget1 = WidgetRequest("CountDownx", 1)
         let widget2 = WidgetRequest("Progress", 1)
         let engine = QueueITEngine(customerId: customerId,
             eventId: eventId,

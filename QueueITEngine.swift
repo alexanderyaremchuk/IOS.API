@@ -96,8 +96,8 @@ public class QueueITEngine {
             success: { (enqueueDto) -> Void in
                 self.onEnqueueSuccess(enqueueDto)
             },
-            failure: { (error, errorStatusCode) -> Void in
-                self.onEnqueueFailed(error!, errorStatusCode)
+            failure: { (errorMessage, errorStatusCode) -> Void in
+                self.onEnqueueFailed(errorMessage, errorStatusCode)
             })
     }
     
@@ -152,8 +152,8 @@ public class QueueITEngine {
         }
     }
     
-    func onGetStatusFailed(error: ErrorInfo) {
-        self.retryMonitor(self.checkStatus, error.message)
+    func onGetStatusFailed(errorMessage: String) {
+        self.retryMonitor(self.checkStatus, errorMessage)
     }
     
     func handleWidgets(_ widgets: [WidgetDTO]) {
@@ -205,6 +205,7 @@ public class QueueITEngine {
     func retryMonitor(_ action: @escaping () -> Void, _ errorMessage: String) {
         if (self.deltaSec < MAX_RETRY_SEC)
         {
+            print("retrying, delta: \(self.deltaSec)")
             executeWithDelay(self.deltaSec, action)
             self.deltaSec = self.deltaSec * 2;
         } else {
@@ -213,13 +214,12 @@ public class QueueITEngine {
         }
     }
     
-    func onEnqueueFailed(_ error: ErrorInfo, _ errorStatusCode: Int) {
+    func onEnqueueFailed(_ message: String, _ errorStatusCode: Int) {
         if (errorStatusCode >= 400 && errorStatusCode < 500)
         {
-            self.onQueueItError(error.message)
+            self.onQueueItError(message)
         } else if errorStatusCode >= 500 {
-            print("retrying, delta: \(self.deltaSec)")
-            self.retryMonitor(self.enqueue, error.message)
+            self.retryMonitor(self.enqueue, message)
         }
     }
 }

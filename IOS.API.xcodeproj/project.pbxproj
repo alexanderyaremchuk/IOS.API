@@ -19,7 +19,6 @@
 		1D84B8171DD08342008AE794 /* EnqueueDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8161DD08342008AE794 /* EnqueueDTO.swift */; };
 		1D84B8191DD09202008AE794 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B8181DD09202008AE794 /* EventDTO.swift */; };
 		1D84B81B1DD0C401008AE794 /* WidgetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84B81A1DD0C401008AE794 /* WidgetRequest.swift */; };
-		1DA8457A1DE2F34D0087ECF6 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA845791DE2F34D0087ECF6 /* ErrorInfo.swift */; };
 		1DC9C7701DCB42130053681B /* QueueCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DC9C76F1DCB42130053681B /* QueueCache.swift */; };
 		1DCA71BF1DC88F3800C6FA5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71BE1DC88F3800C6FA5D /* AppDelegate.swift */; };
 		1DCA71C11DC88F3800C6FA5D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCA71C01DC88F3800C6FA5D /* ViewController.swift */; };
@@ -55,7 +54,6 @@
 		1D84B8161DD08342008AE794 /* EnqueueDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnqueueDTO.swift; sourceTree = "<group>"; };
 		1D84B8181DD09202008AE794 /* EventDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
 		1D84B81A1DD0C401008AE794 /* WidgetRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WidgetRequest.swift; sourceTree = "<group>"; };
-		1DA845791DE2F34D0087ECF6 /* ErrorInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
 		1DC9C76F1DCB42130053681B /* QueueCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueueCache.swift; sourceTree = "<group>"; };
 		1DCA71B91DC88F3800C6FA5D /* IOS.API.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IOS.API.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DCA71BD1DC88F3800C6FA5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 		1D2549F21DE8517D00E240BA /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				1DA845791DE2F34D0087ECF6 /* ErrorInfo.swift */,
 				1D84B8181DD09202008AE794 /* EventDTO.swift */,
 				1D5A528D1DE58CC000BA3D42 /* WidgetDTO.swift */,
 				1D84B8161DD08342008AE794 /* EnqueueDTO.swift */,
@@ -289,7 +286,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1DA8457A1DE2F34D0087ECF6 /* ErrorInfo.swift in Sources */,
 				1D2549F71DE8888100E240BA /* iOSUtils.swift in Sources */,
 				1D78009E1DD4750C00B2C801 /* QueueItemDetails.swift in Sources */,
 				1D84B81B1DD0C401008AE794 /* WidgetRequest.swift in Sources */,
