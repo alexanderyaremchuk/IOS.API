@@ -1,5 +1,6 @@
 import Foundation
 
+
 enum QueueItServerFailure : Error {
     case serviceUnavailable, invalidHostName(String), invalidEventId(String), invalidWidgetName(String)
 }
@@ -52,13 +53,33 @@ public class QueueITEngine {
     }
     
     public func run() {
-        if isInSession(tryExtendSession: true) {
-            onQueuePassed()
-        } else if isWithinQueueIdSession() {
-            checkStatus()
-        } else {
-            enqueue()
+        if isConnected() {
+            if isInSession(tryExtendSession: true) {
+                onQueuePassed()
+            } else if isWithinQueueIdSession() {
+                checkStatus()
+            } else {
+                enqueue()
+            }
         }
+    }
+    
+    func isConnected() -> Bool {
+        var count = 0;
+        while (count < 5)
+        {
+            if (!iOSUtils.isInternetAvailable())
+            {
+                sleep(1)
+                count += 1
+            }
+            else
+            {
+                return true
+            }
+        }
+        self.onQueueItError("No internet connection!")
+        return false
     }
     
     func isWithinQueueIdSession() -> Bool {
