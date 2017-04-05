@@ -6,14 +6,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let customerId = "sasha"
-        let eventId = "integrationtest2"
+        let eventId = "mb9"
         let configId = "configId1"
         let widget1 = WidgetRequest("CountDown", 1)
         let widget2 = WidgetRequest("Progress", 1)
+        let widget3 = WidgetRequest("DynamicMessage", 1)
+        let widget4 = WidgetRequest("QueueNumber", 1)
+        let widget5 = WidgetRequest("ExpectedServiceTime", 1)
         let engine = QueueITEngine(customerId: customerId,
             eventId: eventId,
             configId: configId,
-            widgets: widget1, widget2,
+            widgets: widget1, widget2, widget3, widget4, widget5,
             layoutName: "",
             language: "",
             onQueueItemAssigned: (onQueueItemAssigned),
@@ -46,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func onWidgetChanged(widget: WidgetDetails) {
-        print("Widget changed!: \(widget.name)")
+        print("Widget changed!: \(widget.name); Value: \(widget.data)")
     }
     
     func onQueueIdRejected(reason: String) {
